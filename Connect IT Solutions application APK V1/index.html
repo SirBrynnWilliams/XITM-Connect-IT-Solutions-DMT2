@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumko Mobile | Lumko Medical Research Institute</title>
+    <script src="equipment.js" defer></script>
+    <script src="chat.js" defer></script>
+    <style>
+        /* ===== LUMKO MOBILE BRAND ===== */
+        :root {
+            --primary-blue: #075b82;
+            --accent-orange: #e9a23b;
+            --accent-cyan: #a6dbe5;
+            --dark-neutral: #173344;
+            --bg-light: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #dcdcdc;
+            --danger-red: #d9534f;
+            --text-dark: #333333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        [hidden] { display: none !important; }
+        body { background-color: var(--bg-light); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* ===== TOP UTILITY & HEADER BAR ===== */
+        .top-bar {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-orange);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar .brand { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: bold; letter-spacing: 0.5px; }
+        .top-bar .brand span { color: var(--accent-orange); }
+        .brand-logo { width: 68px; height: 68px; object-fit: contain; border-radius: 5px; background: white; padding: 3px; }
+        .top-bar .system-info { font-size: 12px; text-align: right; }
+        .sync-demo-note { margin: 0 0 15px; padding: 10px 12px; background: #effbff; border-left: 4px solid var(--accent-cyan); color: var(--text-dark); font-size: 12px; }
+
+        /* ===== NAVIGATION BAR ===== */
+        .navbar {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 14px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-btn:hover { color: var(--primary-blue); }
+        .nav-btn.active {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--accent-orange);
+            background-color: #fff9f0;
+        }
+
+        /* ===== CONTAINER & LAYOUT ===== */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        /* ===== LANDING / LOGIN PAGE ===== */
+        .landing-card {
+            max-width: 480px;
+            margin: 50px auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            border-top: 5px solid var(--accent-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .landing-card h2 { color: var(--primary-blue); margin-bottom: 10px; font-size: 22px; }
+        .landing-card p { font-size: 13px; color: #666; margin-bottom: 20px; }
+        .landing-card .demo-login-note { padding: 10px 12px; background: #fff7e8; border-left: 4px solid var(--accent-orange); color: var(--text-dark); text-align: left; }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #444; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fafafa;
+            color: var(--text-dark);
+        }
+        .form-group select {
+            appearance: none;
+            padding-right: 38px;
+            background-color: #fafafa;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20' fill='none' stroke='%23075b82' stroke-width='2'%3E%3Cpath d='m5 7 5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            cursor: pointer;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: 3px solid rgba(7, 91, 130, 0.15);
+            border-color: var(--primary-blue);
+            background: var(--white);
+        }
+        .autocomplete-wrap { position: relative; }
+        .autocomplete-list {
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 4px);
+            right: 0;
+            left: 0;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: var(--white);
+            box-shadow: 0 8px 20px rgba(22, 44, 66, 0.16);
+        }
+        .autocomplete-list[hidden] { display: none; }
+        .autocomplete-option {
+            display: block;
+            width: 100%;
+            padding: 9px 10px;
+            border: 0;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            font-size: 13px;
+            text-align: left;
+        }
+        .autocomplete-option:hover, .autocomplete-option[aria-selected="true"] {
+            background: #eaf3fb;
+            color: var(--primary-blue);
+        }
+        .autocomplete-empty { padding: 9px 10px; color: #64748b; font-size: 12px; }
+        .form-hint { margin-top: 5px; color: #64748b; font-size: 11px; }
+        .table-scroll { width: 100%; overflow-x: auto; }
+        .secondary-button { background: #eaf3fb; color: var(--primary-blue); border: 1px solid #c7d9ea; }
+        .secondary-button:hover { background: #dbeaf6; }
+        .inline-feedback { display: block; min-height: 18px; margin-top: 8px; font-size: 12px; }
+        .inline-feedback.error { color: var(--danger-red); }
+        .inline-feedback.success { color: #137333; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 16px; }
+        .search-row { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(220px, 2fr); gap: 16px; }
+        .empty-state { padding: 14px 12px !important; color: #64748b; text-align: center; }
+        @media (max-width: 600px) {
+            .search-row { grid-template-columns: 1fr; gap: 0; }
+        }
+
+        .btn-orange {
+            width: 100%;
+            background-color: var(--accent-orange);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-orange:hover { background-color: #d88e2e; }
+
+        .btn-blue {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* ===== CARDS & GRID ===== */
+        .tab-page { display: none; }
+        .tab-page.active { display: block; }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 20px; }
+
+        .card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--accent-orange);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-list { font-size: 13px; line-height: 1.8; color: #444; }
+        .status-tag { padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+        .status-tag.online { background: #e6f4ea; color: #137333; }
+
+        /* ===== TABLES ===== */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .custom-table th { background: var(--primary-blue); color: white; text-align: left; padding: 8px 12px; }
+        .custom-table td { border-bottom: 1px solid var(--border-color); padding: 8px 12px; }
+
+        /* ===== PLACEHOLDER CONTAINER FOR DIAGRAMS ===== */
+        .barcode-panel {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            background: #f7f9fb;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .barcode-mark {
+            width: 100px;
+            height: 52px;
+            flex: 0 0 auto;
+            background: repeating-linear-gradient(90deg, #263746 0 2px, transparent 2px 4px, #263746 4px 5px, transparent 5px 8px);
+        }
+        .barcode-label { color: #334155; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+        .floor-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .floor-plan-card { min-width: 0; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; }
+        .floor-plan-card h3 { margin-bottom: 10px; color: var(--primary-blue); font-size: 15px; }
+        .floor-plan-card a { display: block; }
+        .floor-plan-card img { display: block; width: 100%; height: 280px; object-fit: contain; background: #f7f9fb; border-radius: 4px; }
+        .floor-plan-card p { margin-top: 8px; color: #666; font-size: 12px; }
+        .sop-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+        .sop-item { border-left: 4px solid var(--accent-orange); padding: 4px 0 4px 14px; line-height: 1.5; }
+        .sop-item strong { color: var(--primary-blue); }
+        .sop-item p { margin-top: 4px; color: #555; font-size: 13px; line-height: 1.6; }
+        .network-pending { min-height: 180px; display: grid; place-items: center; padding: 24px; border: 1px solid var(--border-color); border-radius: 8px; background: #f7f9fb; color: #596579; text-align: center; }
+        .network-diagram-link { display: block; margin-top: 16px; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #f7f9fb; text-align: center; }
+        .network-diagram-image { display: block; width: 100%; max-height: 760px; object-fit: contain; margin: 0 auto; }
+        .image-viewer[hidden] { display: none; }
+        .image-viewer { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: #101820; color: white; }
+        .image-viewer-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; padding: 10px 16px; background: #1b2835; }
+        .image-viewer-title { overflow: hidden; font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+        .image-viewer-actions { display: flex; flex: 0 0 auto; gap: 8px; }
+        .image-viewer-actions button { min-width: 40px; padding: 8px 11px; border: 1px solid #657484; border-radius: 5px; background: #293a4a; color: white; cursor: pointer; font-size: 14px; }
+        .image-viewer-actions button:hover { background: #3a5065; }
+        .image-viewer-stage { position: relative; flex: 1; overflow: hidden; display: grid; place-items: center; touch-action: none; }
+        .image-viewer-stage img { max-width: calc(100vw - 48px); max-height: calc(100vh - 110px); object-fit: contain; transform-origin: center center; cursor: grab; user-select: none; -webkit-user-drag: none; }
+        .image-viewer-stage img.is-dragging { cursor: grabbing; }
+        .image-viewer-hint { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); padding: 7px 10px; border-radius: 4px; background: rgb(16 24 32 / 75%); color: #e1e7ed; font-size: 12px; pointer-events: none; white-space: nowrap; }
+        .equipment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
+        .equipment-card { padding: 16px; border: 1px solid var(--border-color); border-left: 4px solid var(--primary-blue); border-radius: 7px; background: #fff; }
+        .equipment-card h3 { margin: 7px 0; color: var(--primary-blue); font-size: 16px; }
+        .equipment-card p { margin: 5px 0; font-size: 12px; line-height: 1.5; }
+        .equipment-id { color: #52616b; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+        .equipment-status { display: inline-block; padding: 4px 8px; border-radius: 20px; background: #e7f4eb; color: #24683b; font-size: 11px; font-weight: 700; }
+        .equipment-status.maintenance { background: #fff1dd; color: #805008; }
+        .equipment-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+        .equipment-actions button { padding: 7px 9px; font-size: 11px; }
+        .equipment-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+        .equipment-event-list { display: grid; gap: 9px; margin-top: 12px; }
+        .equipment-event { padding: 10px 12px; border-left: 3px solid var(--accent-orange); background: #f7f9fb; font-size: 12px; }
+        .equipment-event strong { display: block; margin-bottom: 3px; color: var(--primary-blue); }
+        .equipment-empty { padding: 16px; color: #687782; font-size: 12px; text-align: center; }
+        .equipment-lookup { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: end; }
+        .equipment-notice { margin-bottom: 14px; padding: 11px 13px; border-left: 4px solid var(--accent-orange); background: #fff7e8; font-size: 12px; line-height: 1.5; }
+        .equipment-dialog { width: min(560px, calc(100% - 24px)); max-height: 90vh; margin: auto; padding: 18px; border: 0; border-radius: 8px; box-shadow: 0 12px 50px #0005; }
+        .equipment-dialog::backdrop { background: #07141fcc; }
+        .equipment-dialog video { display: block; width: 100%; max-height: 55vh; margin: 12px 0; background: #102638; }
+        .equipment-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+        .maintenance-table td { vertical-align: top; }
+        .chat-preview-notice { margin-bottom: 16px; padding: 12px 14px; border-left: 4px solid var(--accent-orange); background: #fff7e8; font-size: 12px; line-height: 1.55; }
+        .chat-channel-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+        .chat-channel-bar .form-group { flex: 1 1 260px; margin-bottom: 10px; }
+        .chat-shortcuts { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+        .chat-shortcuts button { padding: 8px 11px; border: 1px solid #c7d9ea; border-radius: 5px; background: #eaf3fb; color: var(--primary-blue); cursor: pointer; font-size: 12px; font-weight: 600; }
+        .chat-shortcuts button:hover { background: #dbeaf6; }
+        .chat-thread { display: flex; flex-direction: column; gap: 10px; min-height: 220px; max-height: 440px; overflow-y: auto; padding: 14px; border: 1px solid var(--border-color); border-radius: 6px; background: #f3f6f8; }
+        .chat-empty { align-self: center; margin: auto; padding: 20px; color: #687782; font-size: 13px; text-align: center; }
+        .chat-message { max-width: min(85%, 680px); padding: 10px 12px; border: 1px solid #d7e0e7; border-radius: 8px 8px 8px 2px; background: #fff; overflow-wrap: anywhere; }
+        .chat-message-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 5px; color: #52616b; font-size: 10px; font-weight: 700; }
+        .chat-message-text { margin: 0; color: #283943; font-size: 13px; line-height: 1.5; white-space: pre-wrap; }
+        .chat-compose { margin-top: 14px; }
+        .chat-compose textarea { width: 100%; min-height: 96px; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; background: #fafafa; color: var(--text-dark); font-size: 13px; resize: vertical; }
+        .chat-compose textarea:focus { outline: 3px solid rgba(7, 91, 130, 0.15); border-color: var(--primary-blue); background: #fff; }
+        .chat-compose-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 9px; margin-top: 9px; }
+        .chat-compose-actions small { color: #64748b; font-size: 11px; }
+        .chat-compose-actions .chat-send { width: auto; min-width: 130px; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--dark-neutral);
+            color: var(--accent-cyan);
+            text-align: center;
+            padding: 15px;
+            font-size: 11px;
+            margin-top: auto;
+        }
+        .footer-brand { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; color: var(--white); font-size: 13px; font-weight: 600; }
+        .footer-logo { width: 150px; max-height: 64px; object-fit: contain; border-radius: 3px; }
+
+        @media (max-width: 600px) {
+            .top-bar { flex-direction: column; text-align: center; }
+            .top-bar .system-info { text-align: center; }
+            .barcode-panel { align-items: flex-start; flex-direction: column; }
+            .floor-plan-card img { height: 220px; }
+            .footer-brand { flex-direction: column; gap: 8px; }
+            .equipment-lookup { grid-template-columns: 1fr 1fr; }
+            .equipment-lookup .form-group { grid-column: 1 / -1; }
+            .chat-message { max-width: 95%; }
+            .chat-compose-actions { align-items: stretch; flex-direction: column; }
+            .chat-compose-actions .chat-send { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <div class="top-bar">
+        <div class="brand">
+            <img class="brand-logo" src="Diagrams/Lumko%20Medical%20Research%20Logo%20Cropped.png" alt="Lumko Medical Research Institute logo">
+            <div>Lumko <span>Mobile</span></div>
+        </div>
+        <div class="system-info">
+            <div id="live-clock" style="font-size: 13px; font-weight: bold; color: var(--white);">Loading Date/Time...</div>
+            <div style="color: var(--accent-cyan); margin-top: 3px;">Lumko Medical Research Institute | Wi-Fi 7</div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div class="container">
+
+        <!-- Presentation-only sign-in; it does not authenticate or protect the public workspace. -->
+        <div id="landing-page" class="landing-card">
+            <h2>Welcome to Lumko Mobile</h2>
+            <p>Enter your name as the username. The password field is for the sign-in screen only; neither field verifies your identity.</p>
+            <form id="app-demo-signin-form">
+                <div class="form-group">
+                    <label for="app-demo-username">Username</label>
+                    <input id="app-demo-username" name="username" type="text" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-demo-password">Password</label>
+                    <input id="app-demo-password" name="password" type="password" autocomplete="current-password" required>
+                </div>
+                <button class="btn-orange" type="submit">Sign in</button>
+            </form>
+            <p class="demo-login-note"><strong>Visual demonstration only:</strong> credentials are not checked or saved. This screen does not restrict access; the shared database remains publicly readable and editable. Use fictional information only.</p>
+        </div>
+
+        <!-- 2. MAIN PORTAL DASHBOARD (HIDDEN UNTIL LOGIN) -->
+        <div id="main-portal" style="display: none;">
+
+            <!-- NAVIGATION BAR -->
+            <div class="navbar">
+                <button class="nav-btn active" onclick="switchTab('dashboard-tab', this)">Home Dashboard</button>
+                <button class="nav-btn" onclick="switchTab('lims-tab', this)">Specimen Records (LIMS)</button>
+                <button class="nav-btn" onclick="switchTab('query-tab', this)">Database Search</button>
+                <button class="nav-btn" onclick="switchTab('sops-tab', this)">Facility SOPs</button>
+                <button class="nav-btn" onclick="switchTab('helpdesk-tab', this)">Help Desk & Issues</button>
+                <button class="nav-btn" onclick="switchTab('staff-chat-tab', this)">Staff Chat</button>
+                <button class="nav-btn" onclick="switchTab('floors-tab', this)">Floor Plans</button>
+                <button class="nav-btn" onclick="switchTab('equipment-tab', this)">Equipment & Maintenance</button>
+                <button class="nav-btn" onclick="switchTab('network-tab', this)">Network Diagram</button>
+            </div>
+
+            <div style="height: 15px;"></div>
+
+            <!-- TAB 1: HOME DASHBOARD -->
+            <div id="dashboard-tab" class="tab-page active">
+                <div class="grid-2">
+                    <!-- User Profile -->
+                    <div class="card">
+                        <div class="card-header">Staff Profile</div>
+                        <div class="info-list">
+                            <strong>User Name:</strong> <span id="display-user">Staff member</span><br>
+                            <strong>Facility:</strong> Lumko Medical Research Institute<br>
+                            <strong>Department:</strong> IT Services<br>
+                            <strong>Position:</strong> Staff member<br>
+                            <strong>Assigned Zone:</strong> VLAN30 (Research Admin Subnet)
+                        </div>
+                    </div>
+
+                    <!-- Infrastructure Health Monitor -->
+                    <div class="card">
+                        <div class="card-header">Infrastructure Health Monitor</div>
+                        <div class="info-list">
+                            <strong>Core Router (156.10.10.1):</strong> <span class="status-tag online">ONLINE</span><br>
+                            <strong>Active Database Node:</strong> Primary MDF SQL Server (156.10.10.13)<br>
+                            <strong>Campus Backbone Trunk:</strong> OM3 Multimode Fiber (&lt; 80m)<br>
+                            <strong>Wireless AP Standard:</strong> Ubiquiti UniFi Wi-Fi 7 Pro Max
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Navigation Cards -->
+                <div class="card">
+                    <div class="card-header">System Quick Actions</div>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 12px;">Choose a service to get started:</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-blue" onclick="switchTab('lims-tab', document.querySelectorAll('.nav-btn')[1])">Open LIMS Scanner</button>
+                        <button class="btn-blue" onclick="switchTab('query-tab', document.querySelectorAll('.nav-btn')[2])">Search the Database</button>
+                        <button class="btn-orange" onclick="switchTab('helpdesk-tab', document.querySelectorAll('.nav-btn')[4])">Report An Issue / Contact Helpdesk</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: LIBRARY INFORMATION MANAGEMENT (LIMS) -->
+            <div id="lims-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">LIMS Blood Specimen Scanner</div>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Log a specimen here and authorized staff can access it from the staff website.</p>
+                    <p class="sync-demo-note">Specimens are stored in the shared database and refresh automatically. Use fictional data only.</p>
+                    
+                    <div class="barcode-panel">
+                        <span class="barcode-mark" aria-hidden="true"></span>
+                        <span class="barcode-label" id="barcode-display">SPECIMEN-2026-9402</span>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="specimen-type">Sample type</label>
+                            <select id="specimen-type">
+                                <option>Blood Sample</option>
+                                <option>Tissue Biopsy</option>
+                                <option>Plasma Sample</option>
+                                <option>Serum Sample</option>
+                                <option>Other Clinical Specimen</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="specimen-study">Participant / study reference (optional)</label>
+                            <input id="specimen-study" type="text" placeholder="e.g., P-8842 / CT-2026-01">
+                        </div>
+                    </div>
+                    <button class="btn-orange" id="scan-specimen-button" onclick="scanSpecimen()">Scan and save specimen</button>
+                    <div id="lims-feedback" class="inline-feedback" role="status"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Logged Specimen Records</div>
+                    <div class="table-scroll"><table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Specimen Code</th>
+                                <th>Sample Type</th>
+                                <th>Participant / Study</th>
+                                <th>Collected</th>
+                                <th>Status</th>
+                                <th>Logged By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lims-table-body"></tbody>
+                    </table></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Research Record Intake</div>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 15px;">This intake panel is a local demonstration store. Only LIMS specimen records are currently shared through the authenticated server database.</p>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="intake-record-type">Record type</label>
+                            <select id="intake-record-type">
+                                <option value="participants">Participant record</option>
+                                <option value="trialSamples">Clinical trial sample</option>
+                                <option value="researchDocs">Research document</option>
+                                <option value="trials">Clinical trial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intake-record-name">Record name / study reference</label>
+                            <input id="intake-record-name" type="text" placeholder="e.g., P-9204 or Consent Form v2">
+                        </div>
+                        <div class="form-group">
+                            <label for="intake-related-record">Related study / participant (optional)</label>
+                            <input id="intake-related-record" type="text" placeholder="e.g., CT-2026-01">
+                        </div>
+                        <div class="form-group">
+                            <label for="intake-record-status">Status</label>
+                            <select id="intake-record-status">
+                                <option>Active</option>
+                                <option>Pending review</option>
+                                <option>Stored</option>
+                                <option>Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-blue" onclick="addResearchRecord()">Save research record</button>
+                    <div id="intake-feedback" class="inline-feedback" role="status"></div>
+                </div>
+            </div>
+
+            <!-- TAB 3: SIMPLIFIED DATABASE QUERY -->
+            <div id="query-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Search Facility Records</div>
+                    <div id="database-storage-feedback" class="inline-feedback" role="status"></div>
+                    
+                    <div class="form-group">
+                        <label for="dataset-select">Select record type</label>
+                        <select id="dataset-select" onchange="updateQueryBox()">
+                            <option value="all">All facility records</option>
+                            <option value="lims">LIMS Blood Specimens</option>
+                            <option value="participants">Patient / Participant Records</option>
+                            <option value="trialSamples">Clinical Trial Samples</option>
+                            <option value="researchDocs">Research Documents</option>
+                            <option value="trials">Clinical Trials (REDCap)</option>
+                            <option value="audit">System User Audit Logs</option>
+                            <option value="helpdesk">Help Desk Tickets</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="record-search">Search records:</label>
+                        <input type="search" id="record-search" placeholder="Search IDs, names, studies, status..." oninput="runSqlQuery()" onkeydown="if(event.key === 'Enter') runSqlQuery()">
+                    </div>
+
+                    <button class="btn-blue" onclick="runSqlQuery()">Search records</button>
+                    <span id="query-feedback" role="status" style="margin-left: 10px; font-size: 12px; color: #555;"></span>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Search Results</div>
+                    <div class="table-scroll"><table class="custom-table">
+                        <thead>
+                            <tr id="query-headers">
+                                <th>Trial ID</th>
+                                <th>Participant ID</th>
+                                <th>Trial Name</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="query-results-body"></tbody>
+                    </table></div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FACILITY SOPS -->
+            <div id="sops-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Facility Standard Operating Procedures (SOPs)</div>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Summary key points of core operational protocols governing the Lumko Medical Research Institute:</p>
+
+                    <div class="sop-list">
+                        <div class="sop-item">
+                            <strong>SOP 01: Core Software Management</strong>
+                            <p>Governs REDCap and LIMS application server bindings (156.10.10.12), user role permissions, and POPIA privacy compliance.</p>
+                        </div>
+                        <div class="sop-item">
+                            <strong>SOP 02: Information Security & Access Control</strong>
+                            <p>Mandates 12+ character complex passwords, Active Directory MFA, and LSZH fire-retardant network cabling standards.</p>
+                        </div>
+                        <div class="sop-item">
+                            <strong>SOP 03: Acceptable Use of IT Infrastructure</strong>
+                            <p>Restricts Lenovo ThinkCentre workstations to official facility functions and prohibits unauthorized software installations.</p>
+                        </div>
+                        <div class="sop-item">
+                            <strong>SOP 04: IT Hardware Procurement & Acquisition</strong>
+                            <p>Defines formal approval workflows for acquiring hardware, logging equipment assets, and managing HP LaserJet leasing contracts.</p>
+                        </div>
+                        <div class="sop-item">
+                            <strong>SOP 05: IT Helpdesk & Incident Escalation</strong>
+                            <p>Outlines Tier 1/2 triage procedures, issue reporting workflows, and response SLAs for network, power, and workstation failures.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: HELPDESK & ISSUE REPORTING -->
+            <div id="helpdesk-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Report an Issue / Contact Help Desk</div>
+                    
+                    <div class="form-group">
+                        <label for="issue-category">Select issue category</label>
+                        <select id="issue-category" onchange="toggleOtherIssue()">
+                            <option>Wi-Fi / Wireless Network Connection</option>
+                            <option>Network Cable / Port Failure</option>
+                            <option>Power / Electrical Disruption</option>
+                            <option>Water Leak / Facilities Emergency</option>
+                            <option>Fire / Hazard Emergency</option>
+                            <option>Workstation Hardware / Printer Issue</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issue-location">Building / floor (optional)</label>
+                        <div class="autocomplete-wrap">
+                            <input type="text" id="issue-location" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="issue-location-options" placeholder="Type a building or floor, e.g., Main Building">
+                            <div id="issue-location-options" class="autocomplete-list" role="listbox" hidden></div>
+                        </div>
+                        <div class="form-hint">Optional: choose a building/floor or enter a location you know.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issue-room">Room number / location</label>
+                        <div class="autocomplete-wrap">
+                            <input type="text" id="issue-room" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="issue-room-options" placeholder="Type a room, e.g., RO or 204">
+                            <div id="issue-room-options" class="autocomplete-list" role="listbox" hidden></div>
+                        </div>
+                        <div class="form-hint">Search matches room numbers across all buildings; exact floor is not required.</div>
+                    </div>
+
+                    <div class="form-group" id="other-issue-group" hidden>
+                        <label for="other-issue">Describe the other issue</label>
+                        <input type="text" id="other-issue" placeholder="Briefly describe the issue category">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issue-desc">Issue description / message</label>
+                        <textarea id="issue-desc" rows="3" placeholder="Describe the issue or error message..."></textarea>
+                    </div>
+                    <button class="btn-orange" onclick="submitTicket()">Submit Issue Ticket</button>
+                    <div id="ticket-feedback" class="inline-feedback" role="status"></div>
+                </div>
+            </div>
+
+            <!-- STAFF CHAT LOCAL PREVIEW -->
+            <div id="staff-chat-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Staff Chat</div>
+                    <p class="chat-preview-notice"><strong>Local preview only:</strong> messages are saved in this browser and are not delivered to other staff or IT administrators. This app does not yet have verified staff accounts or a shared messaging service. Do not enter passwords, patient or participant details, confidential research data, or other sensitive information.</p>
+                    <div class="chat-channel-bar">
+                        <div class="form-group">
+                            <label for="chat-channel">Topic channel</label>
+                            <select id="chat-channel">
+                                <option value="network">Network & IT</option>
+                                <option value="research">Research & Equipment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="chat-location">Your building and floor</label>
+                            <select id="chat-location">
+                                <option value="Main Building · Floor 1">Main Building · Floor 1</option>
+                                <option value="Main Building · Floor 2">Main Building · Floor 2</option>
+                                <option value="Main Building · Floor 3">Main Building · Floor 3</option>
+                                <option value="Laboratory Building · Floor 1">Laboratory Building · Floor 1</option>
+                                <option value="Laboratory Building · Floor 2">Laboratory Building · Floor 2</option>
+                                <option value="Laboratory Building · Floor 3">Laboratory Building · Floor 3</option>
+                                <option value="Laboratory Building · Floor 4">Laboratory Building · Floor 4</option>
+                                <option value="Laboratory Building · Floor 5">Laboratory Building · Floor 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h3 id="chat-shortcuts-title">Network & IT quick messages</h3>
+                    <div id="chat-shortcuts" class="chat-shortcuts" aria-labelledby="chat-shortcuts-title"></div>
+                    <div id="chat-thread" class="chat-thread" role="log" aria-live="polite" aria-relevant="additions text"></div>
+                    <form id="chat-compose-form" class="chat-compose">
+                        <label for="chat-message-input">Message</label>
+                        <textarea id="chat-message-input" maxlength="500" placeholder="Write a short operational message…" required></textarea>
+                        <div class="chat-compose-actions">
+                            <small id="chat-character-count">0 / 500 characters</small>
+                            <button class="btn-orange chat-send" type="submit">Send preview message</button>
+                        </div>
+                    </form>
+                    <div id="chat-feedback" class="inline-feedback" role="status" aria-live="polite"></div>
+                    <div class="equipment-actions"><button class="btn-blue" id="chat-clear-local" type="button">Clear messages on this browser</button></div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Keep network and research reports distinct</div>
+                    <div class="sop-list">
+                        <div class="sop-item"><strong>Network & IT</strong><p>Report connectivity, Wi-Fi, wired ports, workstations, or a network service. Include the building/floor and symptoms; do not include account passwords.</p></div>
+                        <div class="sop-item"><strong>Research & Equipment</strong><p>Report an equipment workflow, availability, run, or maintenance concern. Include an approved asset tag if available; leave out patient, participant, and study identifiers.</p></div>
+                    </div>
+                    <p class="form-hint">An equipment issue may involve both areas: report operational symptoms in Research & Equipment and network symptoms in Network & IT. A qualified biomedical or vendor contact should confirm a device’s approved network connection.</p>
+                </div>
+            </div>
+
+            <!-- TAB 6: FLOOR PLANS -->
+            <div id="floors-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Facility Floor Plans</div>
+                    <p style="font-size: 13px; color: #555;">Select a plan to view it at full size.</p>
+                    <div class="floor-plan-grid">
+                        <article class="floor-plan-card">
+                            <h3>Main Building · Floor 1</h3>
+                            <a href="Diagrams/Main%20Building%20-%20Floor%201.png">
+                                <img src="Diagrams/Main%20Building%20-%20Floor%201.png" alt="Main Building floor 1 floor plan">
+                            </a>
+                            <p>Click to view full-screen; scroll to zoom and drag to pan.</p>
+                        </article>
+                        <article class="floor-plan-card">
+                            <h3>Main Building · Floors 2–3</h3>
+                            <a href="Diagrams/Main%20Building%20-%20Floor%202-3.png">
+                                <img src="Diagrams/Main%20Building%20-%20Floor%202-3.png" alt="Main Building floors 2 and 3 floor plan">
+                            </a>
+                            <p>Click to view full-screen; scroll to zoom and drag to pan.</p>
+                        </article>
+                        <article class="floor-plan-card">
+                            <h3>Laboratory Building · Floor 1 & Server Room</h3>
+                            <a href="Diagrams/Labratory%20Bulding%20-%20Floor%201%20and%20Server%20Room.png">
+                                <img src="Diagrams/Labratory%20Bulding%20-%20Floor%201%20and%20Server%20Room.png" alt="Laboratory Building floor 1 and server room floor plan">
+                            </a>
+                            <p>Click to view full-screen; scroll to zoom and drag to pan.</p>
+                        </article>
+                        <article class="floor-plan-card">
+                            <h3>Laboratory Building · Floors 2–5</h3>
+                            <a href="Diagrams/Labratory%20Bulding%20-%20Floor%202-5.png">
+                                <img src="Diagrams/Labratory%20Bulding%20-%20Floor%202-5.png" alt="Laboratory Building floors 2 to 5 floor plan">
+                            </a>
+                            <p>Click to view full-screen; scroll to zoom and drag to pan.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EQUIPMENT LOCATION, MAINTENANCE & OPERATOR ALERTS -->
+            <div id="equipment-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Equipment Locator & Maintenance</div>
+                    <p class="equipment-notice"><strong>Equipment records and alerts:</strong> Seed equipment, status, and location entries need verification against the facility inventory. Locations are not live indoor positioning. Maintenance and reminders are stored in this browser; completion alerts are scheduled or logged by a staff member, not received from machine telemetry.</p>
+                    <div class="equipment-lookup">
+                        <div class="form-group">
+                            <label for="equipment-search">Search equipment or scan a QR asset tag</label>
+                            <input id="equipment-search" type="search" placeholder="Asset ID, equipment name, type or floor">
+                        </div>
+                        <button class="btn-blue" id="equipment-scan-open" type="button">Scan QR tag</button>
+                        <button class="btn-orange" id="equipment-search-clear" type="button">Clear</button>
+                    </div>
+                    <div id="equipment-feedback" class="inline-feedback" role="status" aria-live="polite"></div>
+                    <div id="equipment-results" class="equipment-grid"></div>
+                </div>
+
+                <section class="card">
+                    <div class="card-header">Update an equipment record</div>
+                    <p style="font-size: 12px; margin-bottom: 14px;">Verify the asset against the facility inventory and floor plan before updating its location or status.</p>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="equipment-edit-asset">Asset</label>
+                            <select id="equipment-edit-asset"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-edit-location">Building, floor and room / zone</label>
+                            <input id="equipment-edit-location" maxlength="160" placeholder="Enter verified location">
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-edit-floor">Floor plan reference</label>
+                            <select id="equipment-edit-floor">
+                                <option value="main1">Main Building · Floor 1</option>
+                                <option value="main23">Main Building · Floors 2–3</option>
+                                <option value="lab1">Laboratory Building · Floor 1 & Server Room</option>
+                                <option value="lab25">Laboratory Building · Floors 2–5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-edit-status">Equipment status</label>
+                            <select id="equipment-edit-status">
+                                <option>Needs verification</option>
+                                <option>Available</option>
+                                <option>In maintenance</option>
+                                <option>Out of service</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-blue" id="equipment-edit-save" type="button">Save asset record</button>
+                    <div id="equipment-edit-feedback" class="inline-feedback" role="status"></div>
+                </section>
+
+                <div class="equipment-layout">
+                    <section class="card">
+                        <div class="card-header">Schedule a completion alert</div>
+                        <p style="font-size: 12px; margin-bottom: 14px;">Set an expected finish time. The alert is a reminder for the operator, not a machine-generated status.</p>
+                        <div class="form-group">
+                            <label for="equipment-process-asset">Equipment</label>
+                            <select id="equipment-process-asset"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-process-name">Run or process</label>
+                            <input id="equipment-process-name" maxlength="80" placeholder="e.g., Serum centrifuge cycle">
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-process-finish">Expected completion</label>
+                            <input id="equipment-process-finish" type="datetime-local">
+                        </div>
+                        <button class="btn-orange" id="equipment-alert-schedule" type="button">Schedule reminder</button>
+                        <div id="equipment-alert-feedback" class="inline-feedback" role="status"></div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">Equipment maintenance</div>
+                        <div class="form-group">
+                            <label for="equipment-maintenance-asset">Equipment</label>
+                            <select id="equipment-maintenance-asset"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-maintenance-type">Maintenance type</label>
+                            <select id="equipment-maintenance-type">
+                                <option>Routine service</option>
+                                <option>Calibration</option>
+                                <option>Repair request</option>
+                                <option>Safety inspection</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-maintenance-date">Scheduled date</label>
+                            <input id="equipment-maintenance-date" type="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="equipment-maintenance-notes">Notes</label>
+                            <textarea id="equipment-maintenance-notes" rows="2" maxlength="300" placeholder="Service details or issue summary"></textarea>
+                        </div>
+                        <button class="btn-blue" id="equipment-maintenance-save" type="button">Save maintenance entry</button>
+                        <div id="equipment-maintenance-feedback" class="inline-feedback" role="status"></div>
+                    </section>
+                </div>
+
+                <section class="card">
+                    <div class="card-header">Upcoming and active reminders</div>
+                    <div id="equipment-alert-list" class="equipment-event-list"></div>
+                    <div class="equipment-actions"><button class="btn-blue" id="equipment-notifications-enable" type="button">Enable browser notifications</button></div>
+                    <div id="equipment-notifications-feedback" class="inline-feedback" role="status"></div>
+                </section>
+                <section class="card">
+                    <div class="card-header">Recent equipment activity</div>
+                    <div id="equipment-activity-list" class="equipment-event-list"></div>
+                </section>
+                <section class="card">
+                    <div class="card-header">Maintenance register</div>
+                    <div class="table-scroll"><table class="custom-table maintenance-table">
+                        <thead><tr><th>Asset</th><th>Maintenance</th><th>Scheduled</th><th>Notes</th><th>Status</th></tr></thead>
+                        <tbody id="equipment-maintenance-body"></tbody>
+                    </table></div>
+                </section>
+            </div>
+
+            <!-- TAB 7: NETWORK DIAGRAM -->
+            <div id="network-tab" class="tab-page">
+                <div class="card">
+                    <div class="card-header">Facility Network Diagram</div>
+                    <p style="font-size: 13px; color: #555;">Click the facility network diagram to view it full-screen; scroll to zoom and drag to pan.</p>
+                    <a class="network-diagram-link" href="Diagrams/Network%20Diagram%20-%20XITM%20DMT2.png">
+                        <img class="network-diagram-image" src="Diagrams/Network%20Diagram%20-%20XITM%20DMT2.png" alt="Lumko Medical Research Institute network diagram">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="image-viewer" class="image-viewer" role="dialog" aria-modal="true" aria-label="Full-screen image viewer" hidden>
+        <div class="image-viewer-toolbar">
+            <div id="image-viewer-title" class="image-viewer-title"></div>
+            <div class="image-viewer-actions">
+                <button type="button" id="image-zoom-out" aria-label="Zoom out" title="Zoom out">−</button>
+                <button type="button" id="image-zoom-reset" title="Reset zoom">Reset</button>
+                <button type="button" id="image-zoom-in" aria-label="Zoom in" title="Zoom in">+</button>
+                <button type="button" id="image-viewer-close" aria-label="Close image viewer" title="Close (Esc)">Close</button>
+            </div>
+        </div>
+        <div id="image-viewer-stage" class="image-viewer-stage">
+            <img id="image-viewer-image" alt="">
+            <div class="image-viewer-hint">Scroll to zoom · Hold left mouse button and drag to move · Esc to close</div>
+        </div>
+    </div>
+
+    <dialog id="equipment-scan-dialog" class="equipment-dialog" aria-labelledby="equipment-scan-title">
+        <h2 id="equipment-scan-title">Scan equipment QR tag</h2>
+        <p style="margin-top: 8px; font-size: 12px;">Hold a QR tag containing an equipment asset ID in view of the camera.</p>
+        <video id="equipment-scan-video" playsinline muted></video>
+        <div class="equipment-dialog-actions"><button type="button" class="btn-blue" id="equipment-scan-close">Close scanner</button></div>
+    </dialog>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">
+            <span>This mobile application was produced by Connect IT Solutions.</span>
+            <img class="footer-logo" src="Diagrams/Connect%20IT%20Solutions%20HD%20Logo.jpeg" alt="Connect IT Solutions logo">
+        </div>
+        Active Directory Authenticated • POPIA Data Privacy Compliant • Wi-Fi 7 Supported
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // LIVE CLOCK FUNCTION
+        function updateClock() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-GB');
+            document.getElementById('live-clock').innerText = dateStr + " | " + timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Open the public, unauthenticated presentation workspace.
+        let specimenRefreshTimer = null;
+
+        function openPublicPortal(displayName) {
+            document.getElementById('display-user').textContent = displayName;
+            const profileCard = document.querySelector('#dashboard-tab .info-list');
+            profileCard.replaceChildren();
+            [
+                ['User Name:', displayName],
+                ['Facility:', 'Lumko Medical Research Institute'],
+                ['Department:', 'IT Services'],
+                ['Position:', 'Staff member'],
+                ['Assigned Zone:', 'VLAN30 (Research Admin Subnet)']
+            ].forEach(([label, value], index) => {
+                const strong = document.createElement('strong');
+                strong.textContent = label;
+                if(index === 0) {
+                    const displayName = document.createElement('span');
+                    displayName.id = 'display-user';
+                    displayName.textContent = value;
+                    profileCard.append(strong, ' ', displayName, document.createElement('br'));
+                } else {
+                    profileCard.append(strong, ` ${value}`, document.createElement('br'));
+                }
+            });
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('main-portal').style.display = 'block';
+            loadSharedSpecimens();
+            if(specimenRefreshTimer) clearInterval(specimenRefreshTimer);
+            specimenRefreshTimer = setInterval(loadSharedSpecimens, 30000);
+        }
+
+        document.getElementById('app-demo-signin-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const displayName = document.getElementById('app-demo-username').value.trim();
+            openPublicPortal(displayName || 'Staff member');
+        });
+
+        async function loadSharedSpecimens() {
+            try {
+                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                const specimens = await window.LumkoData.listSpecimens();
+                records.lims = specimens.map(specimen => ({
+                    id: specimen.id,
+                    'Specimen ID': specimen.specimen_code,
+                    'Sample Type': specimen.sample_type,
+                    'Participant / Study': specimen.participant_study_ref,
+                    'Collection Date': specimen.collection_date,
+                    Status: specimen.status,
+                    'Logged By': specimen.logged_by
+                }));
+                renderRecordViews();
+                setFeedback('lims-feedback', 'Connected to the shared specimen database.', false);
+            } catch(error) {
+                setFeedback('lims-feedback', error instanceof Error ? error.message : 'Unable to load shared specimens.', true);
+            }
+        }
+
+        // TAB SWITCHING FUNCTION
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            if(btnElement) btnElement.classList.add('active');
+        }
+
+        const STORAGE_KEY = 'careconnect-facility-records-v1';
+        const recordTypes = {
+            lims: { label: 'LIMS Blood Specimens', headers: ['Specimen ID', 'Sample Type', 'Participant / Study', 'Collection Date', 'Status', 'Logged By'] },
+            participants: { label: 'Patient / Participant Records', headers: ['Participant ID', 'Study', 'Enrollment Status', 'Created By'] },
+            trialSamples: { label: 'Clinical Trial Samples', headers: ['Sample ID', 'Sample Type', 'Trial / Participant', 'Status', 'Logged By'] },
+            researchDocs: { label: 'Research Documents', headers: ['Document ID', 'Title', 'Study', 'Document Type', 'Status', 'Added By'] },
+            trials: { label: 'Clinical Trials (REDCap)', headers: ['Trial ID', 'Participant ID', 'Trial Name', 'Status'] },
+            audit: { label: 'System User Audit Logs', headers: ['Log ID', 'User Account', 'Action', 'Status'] },
+            helpdesk: { label: 'Help Desk Tickets', headers: ['Ticket ID', 'Category', 'Location / Room', 'Description', 'Status', 'Logged By'] }
+        };
+
+        function createSeedRecords() {
+            return {
+                lims: [
+                    { 'Specimen ID': 'SPEC-2026-9402', 'Sample Type': 'Blood Sample A4', 'Participant / Study': 'P-8842 / CT-2026-01', 'Collection Date': '2026-10-01', Status: 'Stored', 'Logged By': 'A. Nxiweni' },
+                    { 'Specimen ID': 'SPEC-2026-9118', 'Sample Type': 'Tissue Biopsy B1', 'Participant / Study': 'CT-2026-04', 'Collection Date': '2026-09-28', Status: 'Stored', 'Logged By': 'Lab Tech 02' }
+                ],
+                participants: [
+                    { 'Participant ID': 'P-8842', Study: 'CT-2026-01', 'Enrollment Status': 'Enrolled', 'Created By': 'A. Nxiweni' },
+                    { 'Participant ID': 'P-9103', Study: 'CT-2026-04', 'Enrollment Status': 'Screening', 'Created By': 'Research Coordinator' }
+                ],
+                trialSamples: [],
+                researchDocs: [],
+                trials: [
+                    { 'Trial ID': 'CT-2026-01', 'Participant ID': 'P-8842 (Anonymized)', 'Trial Name': 'Lumko Phase 2', Status: 'Active' },
+                    { 'Trial ID': 'CT-2026-04', 'Participant ID': 'P-9103 (Anonymized)', 'Trial Name': 'Vaccine Trial B', Status: 'Active' }
+                ],
+                audit: [
+                    { 'Log ID': 'LOG-801', 'User Account': 'a.nxiweni', Action: 'USER_AUTHENTICATE', Status: 'SUCCESS' },
+                    { 'Log ID': 'LOG-802', 'User Account': 'tech_lab1', Action: 'SPECIMEN_WRITE', Status: 'SUCCESS' }
+                ],
+                helpdesk: []
+            };
+        }
+
+        let storageError = '';
+        let records;
+        try {
+            const savedRecords = localStorage.getItem(STORAGE_KEY);
+            if(savedRecords === null) {
+                records = createSeedRecords();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+            } else {
+                const parsedRecords = JSON.parse(savedRecords);
+                if(!parsedRecords || typeof parsedRecords !== 'object') {
+                    throw new Error('Saved facility records have an invalid format.');
+                }
+                const seedRecords = createSeedRecords();
+                records = Object.fromEntries(Object.keys(recordTypes).map(type => [
+                    type,
+                    Array.isArray(parsedRecords[type]) ? parsedRecords[type] : seedRecords[type]
+                ]));
+            }
+        } catch(error) {
+            records = createSeedRecords();
+            storageError = 'Shared record storage is unavailable: ' + error.message + '. Records are read-only until storage is available.';
+        }
+        records.lims = [];
+
+        function setFeedback(elementId, message, isError) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.toggle('error', Boolean(isError));
+            element.classList.toggle('success', Boolean(message) && !isError);
+        }
+
+        function persistRecord(type, record) {
+            if(storageError) throw new Error(storageError);
+            const nextRecords = { ...records, [type]: [record, ...records[type]] };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(nextRecords));
+            records = nextRecords;
+            renderRecordViews();
+        }
+
+        function makeRecordId(prefix, type) {
+            let id;
+            do {
+                id = prefix + '-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+            } while(records[type].some(record => Object.values(record).includes(id)));
+            return id;
+        }
+
+        function renderRecordTable(body, headers, items, emptyText) {
+            body.replaceChildren();
+            if(items.length === 0) {
+                const row = body.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = headers.length;
+                cell.className = 'empty-state';
+                cell.textContent = emptyText;
+                return;
+            }
+            items.forEach(record => {
+                const row = body.insertRow();
+                headers.forEach(header => {
+                    row.insertCell().textContent = record[header] || '';
+                });
+            });
+        }
+
+        function renderRecordViews() {
+            const specimenBody = document.getElementById('lims-table-body');
+            renderRecordTable(
+                specimenBody,
+                recordTypes.lims.headers,
+                records.lims,
+                'No specimens have been logged yet.'
+            );
+            const headerRow = specimenBody.closest('table').querySelector('thead tr');
+                if(headerRow.cells.length === recordTypes.lims.headers.length) {
+                    const header = document.createElement('th');
+                    header.textContent = 'Manage status';
+                    headerRow.appendChild(header);
+                }
+                if(!records.lims.length) {
+                    specimenBody.querySelector('td').colSpan = recordTypes.lims.headers.length + 1;
+                } else {
+                    records.lims.forEach((record, index) => {
+                        const cell = specimenBody.rows[index].insertCell();
+                        const select = document.createElement('select');
+                        select.setAttribute('aria-label', 'Status for specimen ' + record['Specimen ID']);
+                        ['Received', 'Processing', 'Stored', 'Archived'].forEach(status => {
+                            const option = document.createElement('option');
+                            option.value = status;
+                            option.textContent = status;
+                            option.selected = status === record.Status;
+                            select.appendChild(option);
+                        });
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.className = 'btn-blue';
+                        button.textContent = 'Update';
+                        button.disabled = true;
+                        select.addEventListener('change', () => {
+                            button.disabled = select.value === record.Status;
+                        });
+                        button.addEventListener('click', async () => {
+                            button.disabled = true;
+                            try {
+                                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                                await window.LumkoData.updateSpecimenStatus(record.id, select.value);
+                                await loadSharedSpecimens();
+                            } catch(error) {
+                                setFeedback('lims-feedback', error instanceof Error ? error.message : 'Unable to update specimen status.', true);
+                                button.disabled = false;
+                            }
+                        });
+                        cell.append(select, button);
+                    });
+            }
+            runSqlQuery();
+        }
+
+        async function scanSpecimen() {
+            const button = document.getElementById('scan-specimen-button');
+            button.disabled = true;
+            try {
+                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                const specimen = await window.LumkoData.createSpecimen(
+                    document.getElementById('specimen-type').value,
+                    document.getElementById('specimen-study').value.trim()
+                );
+                document.getElementById('barcode-display').textContent = specimen.specimen_code;
+                await loadSharedSpecimens();
+                setFeedback('lims-feedback', 'Specimen ' + specimen.specimen_code + ' saved to the shared database.', false);
+                document.getElementById('specimen-study').value = '';
+            } catch(error) {
+                setFeedback('lims-feedback', error.message, true);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        function addResearchRecord() {
+            const type = document.getElementById('intake-record-type').value;
+            const name = document.getElementById('intake-record-name').value.trim();
+            const related = document.getElementById('intake-related-record').value.trim() || 'Not specified';
+            const status = document.getElementById('intake-record-status').value;
+            if(!name) {
+                setFeedback('intake-feedback', 'Enter a record name or study reference before saving.', true);
+                document.getElementById('intake-record-name').focus();
+                return;
+            }
+
+            const user = document.getElementById('display-user').textContent.trim();
+            let record;
+            if(type === 'participants') {
+                record = { 'Participant ID': name, Study: related, 'Enrollment Status': status, 'Created By': user };
+            } else if(type === 'trialSamples') {
+                record = { 'Sample ID': makeRecordId('SAMPLE', type), 'Sample Type': name, 'Trial / Participant': related, Status: status, 'Logged By': user };
+            } else if(type === 'researchDocs') {
+                record = { 'Document ID': makeRecordId('DOC', type), Title: name, Study: related, 'Document Type': 'Research document', Status: status, 'Added By': user };
+            } else {
+                record = { 'Trial ID': makeRecordId('CT', type), 'Participant ID': related, 'Trial Name': name, Status: status };
+            }
+
+            try {
+                persistRecord(type, record);
+                setFeedback('intake-feedback', recordTypes[type].label.replace(/ Records?$/, '') + ' saved and synced with Database Search.', false);
+                document.getElementById('intake-record-name').value = '';
+                document.getElementById('intake-related-record').value = '';
+            } catch(error) {
+                setFeedback('intake-feedback', error.message, true);
+            }
+        }
+
+        function updateQueryBox() {
+            runSqlQuery();
+        }
+
+        function runSqlQuery() {
+            const selected = document.getElementById('dataset-select').value;
+            const search = document.getElementById('record-search').value.trim().toLowerCase();
+            const resultHeaders = selected === 'all'
+                ? ['Record Type', ...new Set(Object.values(recordTypes).flatMap(type => type.headers))]
+                : recordTypes[selected].headers;
+            const sourceRows = selected === 'all'
+                ? Object.entries(recordTypes).flatMap(([type, definition]) =>
+                    records[type].map(record => ({ 'Record Type': definition.label, ...record }))
+                )
+                : records[selected];
+            const matchingRows = sourceRows.filter(record =>
+                Object.values(record).join(' ').toLowerCase().includes(search)
+            );
+            const headerRow = document.getElementById('query-headers');
+            headerRow.replaceChildren(...resultHeaders.map(label => {
+                const header = document.createElement('th');
+                header.textContent = label;
+                return header;
+            }));
+            renderRecordTable(document.getElementById('query-results-body'), resultHeaders, matchingRows, 'No matching records found.');
+            document.getElementById('query-feedback').textContent =
+                matchingRows.length + (matchingRows.length === 1 ? ' record found' : ' records found');
+        }
+
+        function toggleOtherIssue() {
+            const otherGroup = document.getElementById('other-issue-group');
+            const isOther = document.getElementById('issue-category').value === 'Other';
+            otherGroup.hidden = !isOther;
+            document.getElementById('other-issue').required = isOther;
+            if(!isOther) document.getElementById('other-issue').value = '';
+        }
+
+        function submitTicket() {
+            const category = document.getElementById('issue-category').value;
+            const otherIssue = document.getElementById('other-issue').value.trim();
+            const location = document.getElementById('issue-location').value.trim();
+            const room = document.getElementById('issue-room').value.trim();
+            const description = document.getElementById('issue-desc').value.trim();
+            if((!location && !room) || !description || (category === 'Other' && !otherIssue)) {
+                setFeedback('ticket-feedback', 'Enter a room or location and issue description' + (category === 'Other' ? ', and describe the other issue.' : '.'), true);
+                return;
+            }
+
+            const ticketId = makeRecordId('HD', 'helpdesk');
+            const ticketCategory = category === 'Other' ? 'Other: ' + otherIssue : category;
+            const ticketLocation = [location, room].filter(Boolean).join(' — ');
+            try {
+                persistRecord('helpdesk', {
+                    'Ticket ID': ticketId,
+                    Category: ticketCategory,
+                    'Location / Room': ticketLocation,
+                    Description: description,
+                    Status: 'Open',
+                    'Logged By': document.getElementById('display-user').textContent.trim()
+                });
+                setFeedback('ticket-feedback', 'Ticket ' + ticketId + ' saved and synced with Database Search.', false);
+                document.getElementById('issue-location').value = '';
+                document.getElementById('issue-room').value = '';
+                document.getElementById('issue-desc').value = '';
+                document.getElementById('other-issue').value = '';
+                toggleOtherIssue();
+            } catch(error) {
+                setFeedback('ticket-feedback', error.message, true);
+            }
+        }
+
+        const facilityLocations = [
+            'Main Building', 'Main Building — Floor 1', 'Main Building — Floor 2', 'Main Building — Floor 3',
+            'Laboratory Building', 'Laboratory Building — Floor 1', 'Laboratory Building — Floor 2',
+            'Laboratory Building — Floor 3', 'Laboratory Building — Floor 4', 'Laboratory Building — Floor 5',
+            'Server Room — Laboratory Building, Floor 1',
+            ...Array.from({ length: 6 }, (_, index) => 'Room ' + (101 + index) + ' — Main Building, Floor 1'),
+            ...Array.from({ length: 6 }, (_, index) => 'Room ' + (201 + index) + ' — Main Building, Floor 2'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (301 + index) + ' — Main Building, Floor 3'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (110 + index) + ' — Laboratory Building, Floor 1'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (210 + index) + ' — Laboratory Building, Floor 2'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (310 + index) + ' — Laboratory Building, Floor 3'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (410 + index) + ' — Laboratory Building, Floor 4'),
+            ...Array.from({ length: 5 }, (_, index) => 'Room ' + (510 + index) + ' — Laboratory Building, Floor 5')
+        ];
+
+        function attachAutocomplete(inputId, listId, options) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+            let activeIndex = -1;
+            let matches = [];
+
+            function closeList() {
+                list.hidden = true;
+                input.setAttribute('aria-expanded', 'false');
+                input.removeAttribute('aria-activedescendant');
+                activeIndex = -1;
+            }
+
+            function showMatches() {
+                const search = input.value.trim().toLowerCase();
+                matches = search ? options.filter(option => option.toLowerCase().includes(search)).slice(0, 12) : options.slice(0, 12);
+                list.replaceChildren();
+                if(matches.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'autocomplete-empty';
+                    empty.textContent = 'No matching rooms or locations';
+                    list.appendChild(empty);
+                } else {
+                    matches.forEach((value, index) => {
+                        const option = document.createElement('button');
+                        option.type = 'button';
+                        option.className = 'autocomplete-option';
+                        option.id = listId + '-option-' + index;
+                        option.setAttribute('role', 'option');
+                        option.setAttribute('aria-selected', 'false');
+                        option.textContent = value;
+                        option.addEventListener('pointerdown', event => event.preventDefault());
+                        option.addEventListener('click', () => {
+                            input.value = value;
+                            closeList();
+                            input.dispatchEvent(new Event('change', { bubbles: true }));
+                        });
+                        list.appendChild(option);
+                    });
+                }
+                list.hidden = false;
+                input.setAttribute('aria-expanded', 'true');
+            }
+
+            input.addEventListener('input', showMatches);
+            input.addEventListener('focus', showMatches);
+            input.addEventListener('keydown', event => {
+                if(list.hidden && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) showMatches();
+                if(event.key === 'ArrowDown' && matches.length) {
+                    event.preventDefault();
+                    activeIndex = (activeIndex + 1) % matches.length;
+                } else if(event.key === 'ArrowUp' && matches.length) {
+                    event.preventDefault();
+                    activeIndex = (activeIndex - 1 + matches.length) % matches.length;
+                } else if(event.key === 'Enter' && !list.hidden && activeIndex >= 0) {
+                    event.preventDefault();
+                    input.value = matches[activeIndex];
+                    closeList();
+                } else if(event.key === 'Escape') {
+                    closeList();
+                }
+                list.querySelectorAll('[role="option"]').forEach((option, index) => {
+                    const active = index === activeIndex;
+                    option.setAttribute('aria-selected', String(active));
+                    if(active) input.setAttribute('aria-activedescendant', option.id);
+                });
+            });
+            input.addEventListener('blur', () => setTimeout(closeList, 120));
+        }
+
+        if(storageError) {
+            setFeedback('database-storage-feedback', storageError, true);
+        }
+        attachAutocomplete('issue-location', 'issue-location-options', facilityLocations);
+        attachAutocomplete('issue-room', 'issue-room-options', facilityLocations);
+        renderRecordViews();
+        updateQueryBox();
+
+        window.addEventListener('storage', event => {
+            if(event.key !== STORAGE_KEY || event.newValue === null) return;
+            try {
+                const updatedRecords = JSON.parse(event.newValue);
+                if(!updatedRecords || Object.keys(recordTypes).some(type => !Array.isArray(updatedRecords[type]))) {
+                    throw new Error('The updated shared record data has an invalid format.');
+                }
+                records = updatedRecords;
+                renderRecordViews();
+            } catch(error) {
+                storageError = 'Unable to sync shared records from another tab: ' + error.message;
+                setFeedback('database-storage-feedback', storageError, true);
+            }
+        });
+
+        const imageViewer = document.getElementById('image-viewer');
+        const imageViewerStage = document.getElementById('image-viewer-stage');
+        const imageViewerImage = document.getElementById('image-viewer-image');
+        let imageZoom = 1;
+        let imagePanX = 0;
+        let imagePanY = 0;
+        let dragStart = null;
+
+        function updateViewerTransform() {
+            imageViewerImage.style.transform =
+                `translate(${imagePanX}px, ${imagePanY}px) scale(${imageZoom})`;
+        }
+
+        function resetViewerTransform() {
+            imageZoom = 1;
+            imagePanX = 0;
+            imagePanY = 0;
+            updateViewerTransform();
+        }
+
+        function zoomViewerAt(nextZoom, clientX, clientY) {
+            const boundedZoom = Math.min(8, Math.max(1, nextZoom));
+            if(boundedZoom === imageZoom) return;
+
+            const stageBounds = imageViewerStage.getBoundingClientRect();
+            const offsetX = clientX - (stageBounds.left + stageBounds.width / 2);
+            const offsetY = clientY - (stageBounds.top + stageBounds.height / 2);
+            const zoomRatio = boundedZoom / imageZoom;
+            imagePanX = offsetX - (offsetX - imagePanX) * zoomRatio;
+            imagePanY = offsetY - (offsetY - imagePanY) * zoomRatio;
+            imageZoom = boundedZoom;
+            updateViewerTransform();
+        }
+
+        function openImageViewer(link, image) {
+            imageViewerImage.src = link.href;
+            imageViewerImage.alt = image.alt;
+            document.getElementById('image-viewer-title').textContent =
+                image.alt || 'Facility diagram';
+            resetViewerTransform();
+            imageViewer.hidden = false;
+            document.body.style.overflow = 'hidden';
+            document.getElementById('image-viewer-close').focus();
+        }
+
+        function closeImageViewer() {
+            imageViewer.hidden = true;
+            imageViewerImage.removeAttribute('src');
+            imageViewerImage.alt = '';
+            document.body.style.overflow = '';
+            dragStart = null;
+        }
+
+        document.querySelectorAll('.floor-plan-card a, .network-diagram-link').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const image = link.querySelector('img');
+                if(image) openImageViewer(link, image);
+            });
+        });
+
+        imageViewer.addEventListener('click', event => {
+            if(event.target === imageViewer) closeImageViewer();
+        });
+        document.getElementById('image-viewer-close').addEventListener('click', closeImageViewer);
+        document.getElementById('image-zoom-reset').addEventListener('click', resetViewerTransform);
+        document.getElementById('image-zoom-in').addEventListener('click', () => {
+            const bounds = imageViewerStage.getBoundingClientRect();
+            zoomViewerAt(imageZoom * 1.5, bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
+        });
+        document.getElementById('image-zoom-out').addEventListener('click', () => {
+            const bounds = imageViewerStage.getBoundingClientRect();
+            zoomViewerAt(imageZoom / 1.5, bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
+        });
+        imageViewerStage.addEventListener('wheel', event => {
+            event.preventDefault();
+            zoomViewerAt(imageZoom * (event.deltaY < 0 ? 1.2 : 1 / 1.2), event.clientX, event.clientY);
+        }, { passive: false });
+        imageViewerImage.addEventListener('pointerdown', event => {
+            if(event.button !== 0 || imageZoom <= 1) return;
+            dragStart = { pointerX: event.clientX, pointerY: event.clientY, panX: imagePanX, panY: imagePanY };
+            imageViewerImage.classList.add('is-dragging');
+            imageViewerImage.setPointerCapture(event.pointerId);
+            event.preventDefault();
+        });
+        imageViewerImage.addEventListener('pointermove', event => {
+            if(!dragStart) return;
+            imagePanX = dragStart.panX + event.clientX - dragStart.pointerX;
+            imagePanY = dragStart.panY + event.clientY - dragStart.pointerY;
+            updateViewerTransform();
+        });
+        imageViewerImage.addEventListener('pointerup', () => {
+            dragStart = null;
+            imageViewerImage.classList.remove('is-dragging');
+        });
+        imageViewerImage.addEventListener('pointercancel', () => {
+            dragStart = null;
+            imageViewerImage.classList.remove('is-dragging');
+        });
+        document.addEventListener('keydown', event => {
+            if(event.key === 'Escape' && !imageViewer.hidden) closeImageViewer();
+        });
+    </script>
+</body>
+</html>

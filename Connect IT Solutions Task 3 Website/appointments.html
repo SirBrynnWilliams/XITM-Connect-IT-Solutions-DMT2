@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appointments | Lumko Medical Research Institute</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="main.js" defer></script></head>
+<body data-page="appointments"><div id="site-header"></div><main class="main-body page-main">
+  <header class="page-heading"><span class="eyebrow">Research appointments</span><h1>Request an appointment</h1><p>Tell us how to reach you and which service you are interested in.</p></header>
+  <section class="form-layout"><form class="form-card" id="appointment-form" data-reference-prefix="APP" novalidate>
+    <div class="form-grid">
+      <div class="form-group"><label for="appointment-name">Full name</label><input id="appointment-name" name="name" autocomplete="name" required maxlength="100"></div>
+      <div class="form-group"><label for="appointment-contact">Contact info (email or phone)</label><input id="appointment-contact" name="contact" required maxlength="120"></div>
+      <div class="form-group"><label for="appointment-service">Service</label><select id="appointment-service" name="service" required><option value="">Choose a service</option><option>Clinical research study enquiry</option><option>Blood or tissue laboratory services</option><option>Diagnostic laboratory screening</option><option>MRI imaging enquiry</option><option>Specimen and disease research</option><option>Academic collaboration</option><option>General research enquiry</option></select></div>
+      <div class="form-group"><label for="appointment-date">Preferred date</label><input type="date" id="appointment-date" name="date" required></div>
+      <div class="form-group full-width"><label for="appointment-notes">Notes (optional)</label><textarea id="appointment-notes" name="notes" rows="4" maxlength="1000" placeholder="Do not include medical records or sensitive health information."></textarea></div>
+    </div>
+    <button class="button primary-button" type="submit">Submit request</button><p class="form-feedback" id="appointment-feedback" role="status" aria-live="polite"></p><p class="account-security-notice">This page does not transmit appointment requests. Please call Lumko on <a href="tel:0642845992">064 284 5992</a> to arrange an appointment.</p>
+  </form><aside class="info-panel"><h2>What happens next?</h2><p>Our research team will review your request and contact you to discuss availability and next steps.</p><p>Submitting a request does not confirm an appointment or study eligibility.</p><p>Please do not include medical records or sensitive health information in this form.</p></aside></section>
+</main><div id="site-footer"></div></body></html>

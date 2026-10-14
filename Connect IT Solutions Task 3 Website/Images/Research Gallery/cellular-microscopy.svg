@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative cellular microscopy</title>
+  <desc id="desc">Fluorescent-style cells with luminous outlines and nuclei on a dark field.</desc>
+  <defs>
+    <linearGradient id="bg" y2="1"><stop stop-color="#091b34"/><stop offset="1" stop-color="#16375a"/></linearGradient>
+    <radialGradient id="cell" cx=".38" cy=".35"><stop stop-color="#62dbcf" stop-opacity=".5"/><stop offset=".7" stop-color="#397ed2" stop-opacity=".2"/><stop offset="1" stop-color="#142d54" stop-opacity=".1"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <g fill="#70e4d6" opacity=".4" filter="url(#glow)"><circle cx="170" cy="190" r="75"/><circle cx="385" cy="132" r="70"/><circle cx="625" cy="185" r="78"/><circle cx="772" cy="366" r="76"/><circle cx="480" cy="410" r="80"/><circle cx="226" cy="410" r="78"/></g>
+  <g fill="url(#cell)" stroke="#7bf1de" stroke-width="5">
+    <path d="M83 171q23-80 100-75 65 2 82 70 25 82-47 121-72 42-127-18-35-38-8-98Z"/>
+    <path d="M303 111q36-74 102-46 74 30 58 101-10 74-86 81-80 5-93-69-7-38 19-67Z"/>
+    <path d="M548 151q12-75 91-78 74-4 97 62 30 75-37 123-63 46-125 4-40-27-26-111Z"/>
+    <path d="M128 386q20-78 95-79 84-2 103 76 15 76-52 115-67 39-123-10-41-36-23-102Z"/>
+    <path d="M389 361q18-75 91-74 77-1 96 71 20 76-45 119-71 47-128-9-36-34-14-107Z"/>
+    <path d="M696 340q24-69 93-65 77 3 87 79 10 75-59 109-71 35-120-22-29-35-1-101Z"/>
+  </g>
+  <g fill="#e9a8ff" stroke="#fff" stroke-opacity=".5" stroke-width="2"><ellipse cx="172" cy="187" rx="25" ry="31"/><ellipse cx="395" cy="145" rx="24" ry="29"/><ellipse cx="640" cy="187" rx="28" ry="32"/><ellipse cx="235" cy="413" rx="27" ry="31"/><ellipse cx="490" cy="393" rx="27" ry="32"/><ellipse cx="783" cy="372" rx="27" ry="31"/></g>
+  <g fill="#bceff0"><circle cx="108" cy="282" r="3"/><circle cx="339" cy="246" r="3"/><circle cx="590" cy="290" r="3"/><circle cx="331" cy="478" r="3"/><circle cx="638" cy="489" r="3"/></g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative MRI scan visualisation</title>
+  <desc id="desc">A stylised axial head scan displayed in a diagnostic imaging interface.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#071724"/><stop offset="1" stop-color="#173a52"/></linearGradient>
+    <radialGradient id="scan"><stop stop-color="#dee9e9"/><stop offset=".35" stop-color="#a4b4b5"/><stop offset=".67" stop-color="#5d727d"/><stop offset=".85" stop-color="#d6e0dd"/><stop offset="1" stop-color="#536a79"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <g fill="none" stroke="#70c9d4" opacity=".5"><path d="M55 85h90M55 85v90M845 515h-90M845 515v-90"/><path d="M72 119h118M72 151h70"/></g>
+  <rect x="184" y="62" width="532" height="476" rx="24" fill="#0b2030" stroke="#42677b" stroke-width="3"/>
+  <circle cx="450" cy="300" r="186" fill="#59c5d6" opacity=".22" filter="url(#glow)"/>
+  <ellipse cx="450" cy="300" rx="163" ry="184" fill="url(#scan)" stroke="#e6f3f1" stroke-width="5"/>
+  <ellipse cx="450" cy="300" rx="123" ry="145" fill="none" stroke="#eaf2ef" stroke-width="9" opacity=".6"/>
+  <path d="M450 159c-52 17-82 58-87 115-3 42 20 58 13 93-5 24-27 49-13 71 17 26 58 4 87 1 29 3 70 25 87-1 14-22-8-47-13-71-7-35 16-51 13-93-5-57-35-98-87-115Z" fill="#1b3646" stroke="#ecf4f0" stroke-width="5"/>
+  <path d="M450 179v226M378 255q30-32 61 0t11 68q-14 22-45 5M522 255q-30-32-61 0t-11 68q14 22 45 5" fill="none" stroke="#cedbd9" stroke-width="7" stroke-linecap="round"/>
+  <g fill="#9fe5e4" font-family="Arial,sans-serif" font-size="15"><text x="216" y="94">MR IMAGING / AXIAL VIEW</text><text x="216" y="513">ILLUSTRATIVE VISUALISATION</text><text x="628" y="94">T1 · 01</text></g>
+  <path d="M243 300h32M625 300h32M450 112v28M450 460v28" stroke="#78d9df" stroke-width="2" opacity=".7"/>
+</svg>

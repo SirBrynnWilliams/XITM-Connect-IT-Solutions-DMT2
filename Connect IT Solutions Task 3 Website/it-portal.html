@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IT Operations | Lumko Medical Research Institute</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="main.js" defer></script></head>
+<body data-page="it-portal" data-staff-page="true"><div id="site-header"></div><main class="main-body page-main">
+  <header class="page-heading"><span class="eyebrow">Internal · IT staff</span><h1>IT operations</h1><p>Campus floor plans, network reference, and a local field log for tracking IT observations.</p></header>
+  <section class="content-section"><div class="section-header"><h2>Research systems</h2><p>Open the staff database explorer, or use the LIMS app link from a phone.</p></div><div class="feature-grid"><a class="feature-card mobile-app-link" href="../Connect%20IT%20Solutions%20application%20APK%20V1/index.html"><h3>Open LIMS on this phone</h3><p>Capture specimens in the mobile-friendly LIMS web app. No app download is needed.</p></a><a class="feature-card" href="database.html"><h3>Staff database explorer</h3><p>Browse and add shared specimens available to authorized users.</p></a></div><p class="db-demo-sync-note">Specimens use Cloudflare D1 through the authenticated API. Other page tools and records remain demonstration-only and may be stored in this browser. Use fictional data only.</p></section>
+  <section class="content-section" aria-labelledby="network-reference-heading">
+    <div class="section-header"><h2 id="network-reference-heading">Network reference</h2><p>View the campus network diagram. Open the original image for a closer look.</p></div>
+    <figure class="it-map-card"><a href="Images/Network Diagram - XITM DMT2.png" target="_blank" rel="noopener noreferrer"><img src="Images/Network Diagram - XITM DMT2.png" alt="Network diagram for the Lumko campus" loading="lazy"></a><figcaption>Network Diagram · XITM DMT2 <a href="Images/Network Diagram - XITM DMT2.png" target="_blank" rel="noopener noreferrer">Open full-size diagram</a></figcaption></figure>
+  </section>
+  <section class="content-section" aria-labelledby="floor-plans-heading">
+    <div class="section-header"><h2 id="floor-plans-heading">Building floor plans</h2><p>Use these plans to locate floors, rooms, and network equipment locations.</p></div>
+    <div class="it-map-grid">
+      <figure class="it-map-card"><a href="Images/Main Building - Floor 1.png" target="_blank" rel="noopener noreferrer"><img src="Images/Main Building - Floor 1.png" alt="Main Building floor 1 floor plan" loading="lazy"></a><figcaption>Main Building · Floor 1 <a href="Images/Main Building - Floor 1.png" target="_blank" rel="noopener noreferrer">Open full-size plan</a></figcaption></figure>
+      <figure class="it-map-card"><a href="Images/Main Building - Floor 2-3.png" target="_blank" rel="noopener noreferrer"><img src="Images/Main Building - Floor 2-3.png" alt="Main Building floors 2 and 3 floor plan" loading="lazy"></a><figcaption>Main Building · Floors 2–3 <a href="Images/Main Building - Floor 2-3.png" target="_blank" rel="noopener noreferrer">Open full-size plan</a></figcaption></figure>
+      <figure class="it-map-card"><a href="Images/Labratory Bulding - Floor 1 and Server Room.png" target="_blank" rel="noopener noreferrer"><img src="Images/Labratory Bulding - Floor 1 and Server Room.png" alt="Laboratory Building floor 1 and server room floor plan" loading="lazy"></a><figcaption>Laboratory Building · Floor 1 and server room <a href="Images/Labratory Bulding - Floor 1 and Server Room.png" target="_blank" rel="noopener noreferrer">Open full-size plan</a></figcaption></figure>
+      <figure class="it-map-card"><a href="Images/Labratory Bulding - Floor 2-5.png" target="_blank" rel="noopener noreferrer"><img src="Images/Labratory Bulding - Floor 2-5.png" alt="Laboratory Building floors 2 to 5 floor plan" loading="lazy"></a><figcaption>Laboratory Building · Floors 2–5 <a href="Images/Labratory Bulding - Floor 2-5.png" target="_blank" rel="noopener noreferrer">Open full-size plan</a></figcaption></figure>
+    </div>
+  </section>
+  <section class="content-section" aria-labelledby="field-notes-heading">
+    <div class="section-header"><h2 id="field-notes-heading">IT field notes</h2><p>Record asset locations, observed faults, and follow-up reminders for your own reference.</p></div>
+    <div class="it-field-log">
+      <p class="account-security-notice"><i class="fa-solid fa-hard-drive"></i> Notes stay in this browser on this device and are not sent to a server. Do not record passwords, access tokens, participant information, or other sensitive data. This log is not a ticketing or monitoring system.</p>
+      <form class="form-card" id="it-note-form">
+        <div class="form-grid">
+          <div class="form-group"><label for="it-note-category">Note type</label><select id="it-note-category" required><option value="">Select note type</option><option>Network</option><option>Hardware</option><option>Server / system</option><option>Follow-up</option><option>Other</option></select></div>
+          <div class="form-group"><label for="it-note-location">Building / floor / room</label><input id="it-note-location" required maxlength="120" autocomplete="off"></div>
+          <div class="form-group full-width"><label for="it-note-asset">Asset tag (optional)</label><input id="it-note-asset" maxlength="80" autocomplete="off"></div>
+          <div class="form-group full-width"><label for="it-note-details">Observation or follow-up</label><textarea id="it-note-details" rows="4" maxlength="1000" required placeholder="Include useful troubleshooting context, without secrets or participant details."></textarea></div>
+        </div>
+        <button class="button primary-button" type="submit">Save field note</button>
+        <p class="form-feedback" id="it-note-feedback" role="status" aria-live="polite"></p>
+      </form>
+      <h3>Saved notes</h3>
+      <ul class="list-spaced it-note-list" id="it-note-list" aria-live="polite"><li>Loading saved notes…</li></ul>
+    </div>
+  </section>
+</main><div id="site-footer"></div></body></html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative blood sample tubes</title>
+  <desc id="desc">Three coloured sample tubes arranged in a laboratory rack against a cool blue background.</desc>
+  <defs>
+    <linearGradient id="bg" y2="1"><stop stop-color="#b8d8e5"/><stop offset="1" stop-color="#315a73"/></linearGradient>
+    <linearGradient id="glass" x2="1"><stop stop-color="#fff" stop-opacity=".82"/><stop offset=".3" stop-color="#d6f1f4" stop-opacity=".3"/><stop offset=".75" stop-color="#fff" stop-opacity=".65"/><stop offset="1" stop-color="#8eb9c6" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="blood" y2="1"><stop stop-color="#e85b65"/><stop offset="1" stop-color="#8b1834"/></linearGradient>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <circle cx="720" cy="115" r="180" fill="#ecf8fb" opacity=".1"/>
+  <path d="M100 480h700l-48 70H148z" fill="#1a3547"/><path d="M130 464h640v36H130z" fill="#31566e"/>
+  <g stroke="#d7eef2" stroke-width="5">
+    <g transform="translate(220 0)"><path d="M-48 150h96v278q0 28-48 28t-48-28z" fill="url(#glass)"/><path d="M-44 325h88v103q0 27-44 27t-44-27z" fill="url(#blood)" stroke="none"/><path d="M-57 133h114v35H-57z" rx="8" fill="#eb5968"/><path d="M-31 199v95" stroke="#fff" opacity=".65"/></g>
+    <g transform="translate(450 0)"><path d="M-48 125h96v303q0 28-48 28t-48-28z" fill="url(#glass)"/><path d="M-44 288h88v140q0 27-44 27t-44-27z" fill="#bf3450" stroke="none"/><path d="M-57 108h114v35H-57z" fill="#e4f6f8"/><path d="M-31 180v90" stroke="#fff" opacity=".65"/></g>
+    <g transform="translate(680 0)"><path d="M-48 166h96v262q0 28-48 28t-48-28z" fill="url(#glass)"/><path d="M-44 345h88v83q0 27-44 27t-44-27z" fill="url(#blood)" stroke="none"/><path d="M-57 149h114v35H-57z" fill="#6f91d1"/><path d="M-31 207v110" stroke="#fff" opacity=".65"/></g>
+  </g>
+  <g fill="#f5fbff" font-family="Arial,sans-serif" font-size="17" text-anchor="middle"><text x="220" y="468">SAMPLE</text><text x="450" y="468">SAMPLE</text><text x="680" y="468">SAMPLE</text></g>
+  <path d="M82 530h736" stroke="#a7cedb" stroke-width="3" opacity=".7"/>
+</svg>

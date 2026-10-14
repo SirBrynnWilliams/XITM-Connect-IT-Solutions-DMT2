@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative medical research laboratory</title>
+  <desc id="desc">A bright, modern laboratory workspace with a microscope, bench and glassware.</desc>
+  <defs>
+    <linearGradient id="wall" y2="1"><stop stop-color="#dceff0"/><stop offset="1" stop-color="#a9cdd1"/></linearGradient>
+    <linearGradient id="bench" y2="1"><stop stop-color="#f4fbfa"/><stop offset="1" stop-color="#91b5bd"/></linearGradient>
+    <linearGradient id="glass" x2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#83c3c8" stop-opacity=".45"/></linearGradient>
+  </defs>
+  <rect width="900" height="600" fill="url(#wall)"/>
+  <rect x="0" y="0" width="900" height="300" fill="#eef9f7"/>
+  <g fill="#b9d9dc" stroke="#fff" stroke-width="8"><rect x="55" y="48" width="206" height="190" rx="8"/><rect x="286" y="48" width="206" height="190" rx="8"/><rect x="517" y="48" width="206" height="190" rx="8"/></g>
+  <g stroke="#fff" stroke-width="5" opacity=".8"><path d="M158 48v190M389 48v190M620 48v190"/></g>
+  <path d="M0 324h900v42H0z" fill="#527886"/><path d="M0 366h900v176H0z" fill="url(#bench)"/>
+  <path d="M62 541h775v40H62z" fill="#3e6774"/>
+  <g transform="translate(390 188)">
+    <path d="M30 82h166l-14 29H43z" fill="#354f62"/><path d="M82 76q-2-95 53-116l18 24q-31 14-29 92" fill="none" stroke="#263f50" stroke-width="20" stroke-linecap="round"/>
+    <path d="M139-35l60 58-17 19-61-57z" fill="#597f91" stroke="#28495c" stroke-width="7"/>
+    <path d="M184 16l48 44" stroke="#263f50" stroke-width="17" stroke-linecap="round"/><path d="M226 57l13 26" stroke="#72c5cd" stroke-width="12" stroke-linecap="round"/>
+    <path d="M95 108v83M42 191h143" stroke="#354f62" stroke-width="14" stroke-linecap="round"/>
+    <ellipse cx="108" cy="86" rx="24" ry="8" fill="#8de0da"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="5" fill="url(#glass)">
+    <path d="M118 385h42v95q0 18-21 18t-21-18z"/><path d="M111 376h56v15h-56z" fill="#dd8294"/>
+    <path d="M220 408h50v67q0 17-25 17t-25-17z"/><path d="M212 398h66v15h-66z" fill="#93aee8"/>
+    <path d="M738 390h42v90q0 18-21 18t-21-18z"/><path d="M731 381h56v15h-56z" fill="#e9c366"/>
+  </g>
+  <g fill="#fff" opacity=".7"><circle cx="140" cy="455" r="5"/><circle cx="244" cy="455" r="4"/><circle cx="759" cy="451" r="5"/></g>
+  <path d="M70 344h760" stroke="#d9f3f0" stroke-width="4" opacity=".8"/>
+</svg>

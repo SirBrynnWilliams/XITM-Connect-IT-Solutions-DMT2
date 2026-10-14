@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore illustrative views of laboratory science and medical research at Lumko Medical Research Institute.">
+  <title>Research Gallery | Lumko Medical Research Institute</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-page="gallery">
+  <div id="site-header"></div>
+  <main class="main-body page-main">
+    <header class="page-heading">
+      <span class="eyebrow">Research gallery</span>
+      <h1>Perspectives on medical research.</h1>
+      <p>Explore illustrative views inspired by laboratory science, diagnostic imaging and research practice.</p>
+    </header>
+    <section class="content-section" aria-labelledby="gallery-heading">
+      <div class="section-header">
+        <h2 id="gallery-heading">Inside the science</h2>
+        <p>Select an image to view it at full size.</p>
+      </div>
+      <p class="gallery-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> These are scientific illustrations, not patient images or clinical records.</p>
+      <div class="gallery-grid">
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="Blood tissue — illustrative histology view">
+            <img src="Images/Research%20Gallery/blood-tissue.svg" alt="Illustration of a stained blood tissue section viewed under a microscope">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Histology</span><h3>Blood tissue</h3><p>A stylised view of stained tissue structures.</p></div>
+        </article>
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="Blood samples — illustrative laboratory arrangement">
+            <img src="Images/Research%20Gallery/blood-samples.svg" alt="Illustration of labelled blood sample tubes in a laboratory rack">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Laboratory practice</span><h3>Blood samples</h3><p>Sample handling and preparation, represented as an illustration.</p></div>
+        </article>
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="MRI imaging — illustrative scan visualisation">
+            <img src="Images/Research%20Gallery/mri-scan.svg" alt="Illustration of a head MRI scan in a diagnostic imaging viewer">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Diagnostic imaging</span><h3>MRI imaging</h3><p>A non-diagnostic, artistic visualisation of an MRI scan.</p></div>
+        </article>
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="Microscopy — illustrative cellular observation">
+            <img src="Images/Research%20Gallery/cellular-microscopy.svg" alt="Illustration of glowing cells observed through a microscope">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Microscopy</span><h3>Cellular microscopy</h3><p>Illustrative cellular forms in a fluorescence-inspired palette.</p></div>
+        </article>
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="Molecular research — illustrative assay visualisation">
+            <img src="Images/Research%20Gallery/molecular-assay.svg" alt="Illustration of a molecular assay plate with coloured wells">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Molecular research</span><h3>Research assays</h3><p>A visual interpretation of analytical plate-based research.</p></div>
+        </article>
+        <article class="gallery-card">
+          <button class="gallery-image-button" type="button" data-gallery-image data-caption="Laboratory research — illustrative workspace">
+            <img src="Images/Research%20Gallery/laboratory-workspace.svg" alt="Illustration of a contemporary medical research laboratory workspace">
+            <span class="gallery-zoom"><i class="fa-solid fa-expand" aria-hidden="true"></i> View image</span>
+          </button>
+          <div class="gallery-card-copy"><span class="gallery-category">Research environment</span><h3>Laboratory workspace</h3><p>Equipment and careful observation come together in the lab.</p></div>
+        </article>
+      </div>
+    </section>
+    <dialog class="gallery-lightbox" id="gallery-lightbox" aria-labelledby="gallery-lightbox-caption">
+      <div class="gallery-lightbox-toolbar">
+        <p id="gallery-lightbox-caption"></p>
+        <button id="gallery-lightbox-close" type="button" aria-label="Close full-size image"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close</button>
+      </div>
+      <div class="gallery-lightbox-stage"><img id="gallery-lightbox-image" alt=""></div>
+    </dialog>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

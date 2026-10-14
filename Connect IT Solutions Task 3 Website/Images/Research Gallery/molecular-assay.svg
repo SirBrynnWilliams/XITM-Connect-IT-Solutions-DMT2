@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative molecular assay plate</title>
+  <desc id="desc">A research plate with coloured assay wells and a stylised molecular strand.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#122a41"/><stop offset="1" stop-color="#29627b"/></linearGradient>
+    <linearGradient id="plate" y2="1"><stop stop-color="#f3f8f7"/><stop offset="1" stop-color="#b8d0d1"/></linearGradient>
+    <radialGradient id="well"><stop stop-color="#e3f0eb"/><stop offset=".65" stop-color="#7fc2b4"/><stop offset="1" stop-color="#4b8392"/></radialGradient>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <circle cx="154" cy="94" r="190" fill="#75c7d1" opacity=".08"/>
+  <g transform="rotate(-8 445 335)">
+    <rect x="118" y="143" width="664" height="352" rx="38" fill="#0b2132" opacity=".45"/>
+    <rect x="108" y="130" width="664" height="352" rx="38" fill="url(#plate)" stroke="#fff" stroke-width="5"/>
+    <g fill="url(#well)" stroke="#86aeb1" stroke-width="3">
+      <circle cx="188" cy="211" r="29"/><circle cx="278" cy="211" r="29"/><circle cx="368" cy="211" r="29"/><circle cx="458" cy="211" r="29"/><circle cx="548" cy="211" r="29"/><circle cx="638" cy="211" r="29"/><circle cx="728" cy="211" r="29"/>
+      <circle cx="188" cy="306" r="29"/><circle cx="278" cy="306" r="29"/><circle cx="368" cy="306" r="29"/><circle cx="458" cy="306" r="29"/><circle cx="548" cy="306" r="29"/><circle cx="638" cy="306" r="29"/><circle cx="728" cy="306" r="29"/>
+      <circle cx="188" cy="401" r="29"/><circle cx="278" cy="401" r="29"/><circle cx="368" cy="401" r="29"/><circle cx="458" cy="401" r="29"/><circle cx="548" cy="401" r="29"/><circle cx="638" cy="401" r="29"/><circle cx="728" cy="401" r="29"/>
+    </g>
+    <g fill="#f1bb5a"><circle cx="278" cy="211" r="13"/><circle cx="458" cy="211" r="13"/><circle cx="638" cy="211" r="13"/></g>
+    <g fill="#df7393"><circle cx="188" cy="306" r="13"/><circle cx="368" cy="306" r="13"/><circle cx="548" cy="306" r="13"/><circle cx="728" cy="306" r="13"/></g>
+    <g fill="#77a7e4"><circle cx="278" cy="401" r="13"/><circle cx="458" cy="401" r="13"/><circle cx="638" cy="401" r="13"/></g>
+  </g>
+  <path d="M726 66c-56 35-56 70 0 105s56 70 0 105-56 70 0 105" fill="none" stroke="#8be6dd" stroke-width="8"/>
+  <path d="M726 66c56 35 56 70 0 105s-56 70 0 105 56 70 0 105" fill="none" stroke="#e9adcb" stroke-width="8"/>
+  <g stroke="#d8f4f2" stroke-width="4"><path d="M705 87h42M690 127h72M690 167h72M705 207h42M690 247h72M690 287h72M705 327h42"/></g>
+</svg>

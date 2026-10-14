@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative blood tissue microscopy</title>
+  <desc id="desc">A stylised stained tissue section with red and violet cellular structures.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#250d2e"/><stop offset="1" stop-color="#792b50"/></linearGradient>
+    <radialGradient id="cell"><stop stop-color="#f5b0c4"/><stop offset=".65" stop-color="#d85c87"/><stop offset="1" stop-color="#75264f"/></radialGradient>
+    <pattern id="grain" width="38" height="38" patternUnits="userSpaceOnUse"><circle cx="4" cy="8" r="2" fill="#ffd7e7" opacity=".35"/><circle cx="25" cy="28" r="1.6" fill="#c7a4e0" opacity=".42"/></pattern>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <path d="M0 380Q145 290 280 365T560 340T900 325V600H0Z" fill="#a84268" opacity=".64"/>
+  <g fill="url(#cell)" stroke="#f0abc3" stroke-width="4">
+    <ellipse cx="132" cy="144" rx="62" ry="37" transform="rotate(-24 132 144)"/><ellipse cx="333" cy="104" rx="72" ry="42" transform="rotate(18 333 104)"/>
+    <ellipse cx="557" cy="168" rx="62" ry="38" transform="rotate(-12 557 168)"/><ellipse cx="765" cy="117" rx="68" ry="41" transform="rotate(28 765 117)"/>
+    <ellipse cx="211" cy="300" rx="75" ry="43" transform="rotate(17 211 300)"/><ellipse cx="454" cy="300" rx="69" ry="42" transform="rotate(-20 454 300)"/>
+    <ellipse cx="699" cy="313" rx="77" ry="45" transform="rotate(12 699 313)"/><ellipse cx="95" cy="472" rx="65" ry="39"/>
+    <ellipse cx="378" cy="487" rx="77" ry="44" transform="rotate(-15 378 487)"/><ellipse cx="625" cy="475" rx="70" ry="42" transform="rotate(24 625 475)"/>
+  </g>
+  <g fill="#563066" opacity=".8"><ellipse cx="132" cy="144" rx="14" ry="9"/><ellipse cx="333" cy="104" rx="16" ry="9"/><ellipse cx="557" cy="168" rx="15" ry="9"/><ellipse cx="765" cy="117" rx="16" ry="10"/><ellipse cx="211" cy="300" rx="17" ry="10"/><ellipse cx="454" cy="300" rx="16" ry="10"/><ellipse cx="699" cy="313" rx="17" ry="11"/><ellipse cx="95" cy="472" rx="15" ry="9"/><ellipse cx="378" cy="487" rx="17" ry="10"/><ellipse cx="625" cy="475" rx="16" ry="10"/></g>
+  <rect width="900" height="600" fill="url(#grain)"/>
+  <path d="M44 54h64M44 54v64M856 546h-64M856 546v-64" fill="none" stroke="#fff" stroke-width="3" opacity=".6"/>
+</svg>

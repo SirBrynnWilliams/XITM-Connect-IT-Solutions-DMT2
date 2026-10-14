@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My Portal | Lumko Medical Research Institute</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="main.js" defer></script></head>
+<body data-page="customer-portal" data-customer-page="true"><div id="site-header"></div><main class="main-body page-main">
+  <header class="page-heading"><span class="eyebrow">Patient and participant portal</span><h1>My Lumko portal</h1><p>Appointments, study information and document categories.</p></header>
+  <section class="profile-card"><div class="feature-icon"><i class="fa-solid fa-user"></i></div><div><span class="eyebrow">Customer account</span><h2 id="customer-profile-name">Portal user</h2><p id="customer-profile-email"></p><p id="customer-profile-phone"></p></div><button class="button secondary-button" type="button" id="customer-signout-button">Sign out</button></section>
+  <section class="account-security-notice"><i class="fa-solid fa-shield-halved"></i> Account details stay in this browser tab and are not sent to Lumko. Access is not identity-verified or connected to secure medical records. Do not enter or store confidential health or identity information.</section>
+  <section class="content-section" aria-labelledby="sample-statement-heading">
+    <div class="section-header"><h2 id="sample-statement-heading">Sample statement</h2><p>Generate a fictional, printable statement to preview a customer-portal document flow.</p></div>
+    <div class="account-security-notice statement-warning"><i class="fa-solid fa-triangle-exclamation"></i> This is a fictional presentation sample, not a bank statement, proof of funds, invoice, or financial record. All account details and amounts are invented.</div>
+    <div class="button-row"><button class="button primary-button" type="button" id="generate-sample-statement">Generate sample statement</button><button class="button secondary-button" type="button" id="print-sample-statement" hidden>Print or save as PDF</button></div>
+    <article class="statement-document" id="sample-bank-statement" hidden aria-live="polite">
+      <div class="statement-demo-stamp">FICTIONAL DEMONSTRATION ONLY · NOT A BANK STATEMENT</div>
+      <header class="statement-header"><img src="Images/lumko_medical_research_logo.png" alt="Lumko Medical Research Institute logo"><div><p class="eyebrow">Sample customer document</p><h2>LUMKO Medical Research Institute</h2><p>Illustrative account activity · South African rand</p></div></header>
+      <div class="statement-meta"><div><span>Account holder</span><strong id="sample-statement-name"></strong></div><div><span>Account number</span><strong>DEMO-0000-0000</strong></div><div><span>Statement period</span><strong id="sample-statement-period"></strong></div><div><span>Currency</span><strong>ZAR (fictional)</strong></div></div>
+      <div class="table-responsive"><table class="statement-table"><thead><tr><th>Date</th><th>Description</th><th>Debit / credit</th><th>Balance</th></tr></thead><tbody id="sample-statement-transactions"></tbody></table></div>
+      <p class="statement-closing-balance">Closing balance <strong id="sample-statement-closing-balance"></strong></p>
+      <p class="statement-disclaimer">Every name, account identifier, transaction and amount on this page is made up for interface demonstration. It is not issued by a bank or financial institution.</p>
+    </article>
+  </section>
+  <section class="content-section"><div class="section-header"><h2>Appointments</h2><p>Keep track of appointment requests and next steps.</p></div><div class="feature-grid">
+    <article class="feature-card"><span class="feature-icon"><i class="fa-solid fa-calendar-check"></i></span><h3>Appointment requests</h3><p>Contact Lumko to ask about an existing appointment or make a new request.</p><a class="button secondary-button" href="appointments.html">Request an appointment</a></article>
+    <article class="feature-card"><span class="feature-icon"><i class="fa-solid fa-clipboard-list"></i></span><h3>Study participation</h3><p>Ask the research team about current studies, eligibility, consent and the next steps for participation.</p><a class="button secondary-button" href="services.html">Explore research services</a></article>
+  </div></section>
+  <section class="content-section"><div class="section-header"><h2>Documents and results</h2><p>Contact Lumko for information about your personal records.</p></div><div class="feature-grid">
+    <article class="feature-card"><span class="feature-icon"><i class="fa-solid fa-file-medical"></i></span><h3>Laboratory results</h3><p>For laboratory results, please contact the institute directly.</p></article>
+    <article class="feature-card"><span class="feature-icon"><i class="fa-solid fa-image"></i></span><h3>Imaging records</h3><p>For MRI and other imaging records, please contact the clinical team.</p></article>
+    <article class="feature-card"><span class="feature-icon"><i class="fa-solid fa-id-card"></i></span><h3>Profile documents</h3><p>Contact Lumko for assistance with profile and appointment records.</p></article>
+  </div></section>
+</main><div id="site-footer"></div></body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Database Explorer | Lumko Medical Research Institute</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="main.js" defer></script></head>
+<body data-page="database" data-staff-page="true"><div id="site-header"></div><main class="main-body page-main">
+  <header class="page-heading"><span class="eyebrow">Public · Data services</span><h1>Database explorer</h1><p>Browse demonstration registries and shared specimen records.</p></header>
+  <p class="db-demo-sync-note"><strong>Public database:</strong> This page has no sign-in. Anyone with the website or app link can read and change the shared specimen records. Use fictional identifiers only; never enter participant, patient, or confidential information.</p>
+  <section class="content-section" aria-labelledby="staff-specimen-entry-heading">
+    <div class="section-header"><h2 id="staff-specimen-entry-heading">Add a specimen</h2><p>Enter a fictional specimen record. It will be available to anyone using the companion LIMS app.</p></div>
+    <form class="form-card" id="staff-specimen-form">
+      <div class="form-grid">
+        <div class="form-group"><label for="staff-specimen-type">Sample type</label><select id="staff-specimen-type" required><option>Blood Sample</option><option>Tissue Biopsy</option><option>Plasma Sample</option><option>Serum Sample</option><option>Other Clinical Specimen</option></select></div>
+        <div class="form-group"><label for="staff-specimen-study">Participant / study reference (fictional)</label><input id="staff-specimen-study" maxlength="120" autocomplete="off" placeholder="e.g., P-8842 / CT-2026-01"></div>
+      </div>
+      <button class="button primary-button" type="submit">Save specimen</button>
+      <p class="form-feedback" id="staff-specimen-feedback" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+  <section class="db-container">
+    <div class="db-controls" id="dbControls" role="group" aria-label="Select a database table">
+      <button class="db-tab-btn active" type="button" data-db-category="employees" aria-pressed="true"><i class="fa-solid fa-users"></i> Staff Registry</button>
+      <button class="db-tab-btn" type="button" data-db-category="assets" aria-pressed="false"><i class="fa-solid fa-laptop"></i> Full Asset Inventory</button>
+      <button class="db-tab-btn" type="button" data-db-category="network" aria-pressed="false"><i class="fa-solid fa-network-wired"></i> Network Devices</button>
+      <button class="db-tab-btn" type="button" data-db-category="research" aria-pressed="false"><i class="fa-solid fa-file-medical"></i> REDCap / LIMS</button>
+      <button class="db-tab-btn" type="button" data-db-category="specimens" aria-pressed="false"><i class="fa-solid fa-vials"></i> Shared Specimens</button>
+      <button class="db-fullscreen-open" id="dbFullscreenOpen" type="button"><i class="fa-solid fa-expand"></i> Open Full Screen</button>
+    </div>
+    <div class="db-search-bar"><i class="fa-solid fa-search"></i><input type="search" id="dbSearchInput" aria-label="Search database records" placeholder="Search records by keyword, ID, location or status..." autocomplete="off"></div>
+    <p class="db-results-summary" id="dbResultsSummary" aria-live="polite"></p>
+    <div class="table-responsive db-inline-table-wrap"><table class="db-table" id="dbDisplayTable" aria-label="Selected database records"></table></div>
+    <p class="db-footer-note" id="shared-specimen-status" role="status" aria-live="polite"></p>
+    <p class="db-footer-note"><i class="fa-solid fa-triangle-exclamation"></i> Public read/write access is enabled. There is no identity verification or per-user accountability. Use fictional identifiers only.</p>
+  </section>
+  <dialog class="db-fullscreen-dialog" id="dbFullscreenDialog" aria-labelledby="dbFullscreenTitle">
+    <div class="db-fullscreen-layout"><header class="db-fullscreen-header"><div><p class="db-fullscreen-eyebrow">Lumko data services</p><h2 id="dbFullscreenTitle">Staff Registry</h2></div><button class="db-fullscreen-close" id="dbFullscreenClose" type="button" aria-label="Close full-screen database view"><i class="fa-solid fa-xmark"></i></button></header><div class="db-search-bar db-fullscreen-search"><i class="fa-solid fa-search"></i><input type="search" id="dbFullscreenSearchInput" aria-label="Search records in full-screen view" placeholder="Search records..."></div><p class="db-results-summary" id="dbFullscreenResultsSummary" aria-live="polite"></p><div class="table-responsive db-fullscreen-table-wrap"><table class="db-table" id="dbFullscreenTable" aria-label="Database records in full-screen view"></table></div></div>
+  </dialog>
+</main><div id="site-footer"></div></body></html>

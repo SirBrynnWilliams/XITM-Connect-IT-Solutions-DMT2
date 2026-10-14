@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lumko-research-demo",
+  "main": "worker/public.js",
+  "compatibility_date": "2026-10-13",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lumko-shared-records",
+      "database_id": "07e69c19-be3a-46ed-b110-ead13f5a7674",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
