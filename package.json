@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:website": "node scripts/build.mjs website",
+    "build:mobile": "node scripts/build.mjs mobile",
     "dev": "npm run build && wrangler dev",
     "test": "node --test",
     "deploy": "npm run build && wrangler deploy"

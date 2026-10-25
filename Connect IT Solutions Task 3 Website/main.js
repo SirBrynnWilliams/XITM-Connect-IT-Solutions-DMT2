@@ -30,7 +30,7 @@ function renderSiteChrome() {
     const isStaff = document.body.dataset.staffPage === "true";
     const permittedStaffLinks = staffLinks;
     const navigation = publicLinks.map(link => makeLink(link, page)).join("");
-    const brand = `<a class="brand-lockup" href="index.html" aria-label="Lumko Medical Research Institute"><img src="Images/lumko_medical_research_logo_cropped.png" alt="Lumko Medical Research Institute logo"><span><strong>Lumko Medical Research Institute</strong><small>Research · Diagnostics · Discovery</small></span></a>`;
+    const brand = `<div class="brand-lockup"><button class="brand-logo-button" id="brandLogoButton" type="button" aria-label="View full-size Lumko Medical Research Institute logo"><img src="Images/lumko_medical_research_logo_cropped.png" alt=""></button><a class="brand-name-link" href="index.html"><span><strong>Lumko Medical Research Institute</strong><small>Research · Diagnostics · Discovery</small></span></a></div>`;
     const portalLinks = `<a class="portal-link" href="customer-signup.html">Customer sign up</a><a class="portal-link" href="customer-signin.html">Customer sign in</a><a class="portal-link" href="signin.html">Staff portal</a>`;
     const staffNavigation = isStaff
         ? `<nav class="staff-subnav" aria-label="Staff tools"><ul>${permittedStaffLinks.map(link => makeLink(link, page)).join("")}</ul></nav>`
@@ -38,6 +38,7 @@ function renderSiteChrome() {
     const header = document.getElementById("site-header");
     if (header) {
         header.innerHTML = `<header class="navbar"><div class="nav-container"><div class="brand-logo">${brand}</div><div class="header-tools"><span class="header-clock" id="live-clock" aria-live="off"></span>${portalLinks}</div><button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button><nav class="nav-menu" id="navMenu" aria-label="Main navigation"><ul class="nav-links">${navigation}</ul></nav></div>${staffNavigation}</header>`;
+        document.body.insertAdjacentHTML("beforeend", `<dialog id="logo-lightbox" class="gallery-lightbox" aria-labelledby="logo-lightbox-title"><div class="gallery-lightbox-toolbar"><p id="logo-lightbox-title">Lumko Medical Research Institute logo</p><button id="logo-lightbox-close" type="button">Close</button></div><div class="gallery-lightbox-stage"><img src="Images/lumko_medical_research_logo.png" alt="Full-size Lumko Medical Research Institute logo"></div></dialog>`);
         const toggle = document.getElementById("navToggle");
         toggle.addEventListener("click", () => {
             const open = document.getElementById("navMenu").classList.toggle("active");
@@ -893,7 +894,7 @@ function initializeDatabaseExplorer() {
                 );
                 sharedSpecimens = await window.LumkoData.listSpecimens();
                 renderDatabaseTable(document.getElementById("dbSearchInput").value);
-                feedback.textContent = "Specimen saved to the shared database.";
+                feedback.textContent = "Specimen saved in this browser.";
                 feedback.classList.add("is-visible");
                 feedback.classList.remove("is-error");
                 specimenForm.reset();
@@ -910,11 +911,11 @@ function initializeDatabaseExplorer() {
         try {
             sharedSpecimens = await window.LumkoData.listSpecimens();
             const status = document.getElementById("shared-specimen-status");
-            if (status) status.textContent = "Connected to the shared specimen database.";
+            if (status) status.textContent = "Loaded browser-local specimen records.";
             renderDatabaseTable(document.getElementById("dbSearchInput").value);
         } catch (error) {
             const status = document.getElementById("shared-specimen-status");
-            if (status) status.textContent = error instanceof Error ? error.message : "Unable to load shared specimens.";
+            if (status) status.textContent = error instanceof Error ? error.message : "Unable to load browser-local specimens.";
         }
         window.setInterval(async () => {
             try {
@@ -922,7 +923,7 @@ function initializeDatabaseExplorer() {
                 renderDatabaseTable(document.getElementById("dbSearchInput").value);
             } catch (error) {
                 const status = document.getElementById("shared-specimen-status");
-                if (status) status.textContent = error instanceof Error ? error.message : "Unable to refresh shared specimens.";
+                if (status) status.textContent = error instanceof Error ? error.message : "Unable to refresh browser-local specimens.";
             }
         }, 30000);
     }).catch(error => {
@@ -955,8 +956,22 @@ function initializeGalleryViewer() {
     });
 }
 
+function initializeLogoViewer() {
+    const dialog = document.getElementById("logo-lightbox");
+    const logoButton = document.getElementById("brandLogoButton");
+    if (!dialog || !logoButton) return;
+    const closeButton = document.getElementById("logo-lightbox-close");
+
+    logoButton.addEventListener("click", () => dialog.showModal());
+    closeButton.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", event => {
+        if (event.target === dialog) dialog.close();
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderSiteChrome();
+    initializeLogoViewer();
     updateClock();
     window.setInterval(updateClock, 1000);
     initializeStaffGateway();

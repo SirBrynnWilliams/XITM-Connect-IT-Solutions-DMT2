@@ -39,6 +39,8 @@
 
         .top-bar .brand { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: bold; letter-spacing: 0.5px; }
         .top-bar .brand span { color: var(--accent-orange); }
+        .brand-logo-button { display: block; flex: 0 0 auto; padding: 0; border: 0; border-radius: 5px; background: transparent; cursor: zoom-in; }
+        .brand-logo-button:focus-visible { outline: 3px solid var(--accent-orange); outline-offset: 3px; }
         .brand-logo { width: 68px; height: 68px; object-fit: contain; border-radius: 5px; background: white; padding: 3px; }
         .top-bar .system-info { font-size: 12px; text-align: right; }
         .sync-demo-note { margin: 0 0 15px; padding: 10px 12px; background: #effbff; border-left: 4px solid var(--accent-cyan); color: var(--text-dark); font-size: 12px; }
@@ -348,7 +350,7 @@
     <!-- TOP HEADER -->
     <div class="top-bar">
         <div class="brand">
-            <img class="brand-logo" src="Diagrams/Lumko%20Medical%20Research%20Logo%20Cropped.png" alt="Lumko Medical Research Institute logo">
+            <button class="brand-logo-button" id="brand-logo-button" type="button" aria-label="View full-size Lumko Medical Research Institute logo" data-full-src="Diagrams/Lumko%20Medical%20Research%20Logo.png"><img class="brand-logo" src="Diagrams/Lumko%20Medical%20Research%20Logo%20Cropped.png" alt=""></button>
             <div>Lumko <span>Mobile</span></div>
         </div>
         <div class="system-info">
@@ -375,7 +377,7 @@
                 </div>
                 <button class="btn-orange" type="submit">Sign in</button>
             </form>
-            <p class="demo-login-note"><strong>Visual demonstration only:</strong> credentials are not checked or saved. This screen does not restrict access; the shared database remains publicly readable and editable. Use fictional information only.</p>
+            <p class="demo-login-note"><strong>Presentation sign-in:</strong> credentials are not checked or saved, and this screen does not verify identity or restrict access. Specimen records are saved only in this browser, not to a server. Use fictional information only.</p>
         </div>
 
         <!-- 2. MAIN PORTAL DASHBOARD (HIDDEN UNTIL LOGIN) -->
@@ -440,7 +442,7 @@
                 <div class="card">
                     <div class="card-header">LIMS Blood Specimen Scanner</div>
                     <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Log a specimen here and authorized staff can access it from the staff website.</p>
-                    <p class="sync-demo-note">Specimens are stored in the shared database and refresh automatically. Use fictional data only.</p>
+                    <p class="sync-demo-note">Specimen records are stored only in this browser and refresh when you reopen the app. They are not sent to a server or shared with other users. Use fictional identifiers only.</p>
                     
                     <div class="barcode-panel">
                         <span class="barcode-mark" aria-hidden="true"></span>
@@ -486,7 +488,7 @@
 
                 <div class="card">
                     <div class="card-header">Research Record Intake</div>
-                    <p style="font-size: 13px; color: #555; margin-bottom: 15px;">This intake panel is a local demonstration store. Only LIMS specimen records are currently shared through the authenticated server database.</p>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 15px;">This intake panel stores demonstration records only in this browser. These records are separate from the browser-local LIMS specimen records and are not sent to a server.</p>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="intake-record-type">Record type</label>
@@ -953,7 +955,7 @@
 
         async function loadSharedSpecimens() {
             try {
-                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                await import('./shared-api.js');
                 const specimens = await window.LumkoData.listSpecimens();
                 records.lims = specimens.map(specimen => ({
                     id: specimen.id,
@@ -965,9 +967,9 @@
                     'Logged By': specimen.logged_by
                 }));
                 renderRecordViews();
-                setFeedback('lims-feedback', 'Connected to the shared specimen database.', false);
+                setFeedback('lims-feedback', 'Loaded browser-local specimen records.', false);
             } catch(error) {
-                setFeedback('lims-feedback', error instanceof Error ? error.message : 'Unable to load shared specimens.', true);
+                setFeedback('lims-feedback', error instanceof Error ? error.message : 'Unable to load browser-local specimens.', true);
             }
         }
 
@@ -1119,7 +1121,7 @@
                         button.addEventListener('click', async () => {
                             button.disabled = true;
                             try {
-                                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                                await import('./shared-api.js');
                                 await window.LumkoData.updateSpecimenStatus(record.id, select.value);
                                 await loadSharedSpecimens();
                             } catch(error) {
@@ -1137,14 +1139,14 @@
             const button = document.getElementById('scan-specimen-button');
             button.disabled = true;
             try {
-                await import('../Connect%20IT%20Solutions%20Task%203%20Website/shared-api.js');
+                await import('./shared-api.js');
                 const specimen = await window.LumkoData.createSpecimen(
                     document.getElementById('specimen-type').value,
                     document.getElementById('specimen-study').value.trim()
                 );
                 document.getElementById('barcode-display').textContent = specimen.specimen_code;
                 await loadSharedSpecimens();
-                setFeedback('lims-feedback', 'Specimen ' + specimen.specimen_code + ' saved to the shared database.', false);
+                setFeedback('lims-feedback', 'Specimen ' + specimen.specimen_code + ' saved in this browser.', false);
                 document.getElementById('specimen-study').value = '';
             } catch(error) {
                 setFeedback('lims-feedback', error.message, true);
@@ -1399,8 +1401,8 @@
             updateViewerTransform();
         }
 
-        function openImageViewer(link, image) {
-            imageViewerImage.src = link.href;
+        function openImageViewer(source, image) {
+            imageViewerImage.src = source;
             imageViewerImage.alt = image.alt;
             document.getElementById('image-viewer-title').textContent =
                 image.alt || 'Facility diagram';
@@ -1422,7 +1424,14 @@
             link.addEventListener('click', event => {
                 event.preventDefault();
                 const image = link.querySelector('img');
-                if(image) openImageViewer(link, image);
+                if(image) openImageViewer(link.href, image);
+            });
+        });
+
+        const brandLogoButton = document.getElementById('brand-logo-button');
+        brandLogoButton.addEventListener('click', () => {
+            openImageViewer(new URL(brandLogoButton.dataset.fullSrc, document.baseURI).href, {
+                alt: 'Full-size Lumko Medical Research Institute logo'
             });
         });
 

@@ -1178,15 +1178,35 @@ body {
     align-items: center;
     gap: 0.8rem;
     color: #FFFFFF;
-    text-decoration: none;
     font-size: 1rem;
     font-weight: 700;
     white-space: normal;
 }
-.brand-lockup img {
+.brand-logo-button {
+    display: block;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+}
+.brand-logo-button:focus-visible {
+    outline: 3px solid #F3B451;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+.brand-logo-button img {
+    display: block;
     width: 112px;
     height: 104px;
     object-fit: contain;
+}
+.brand-name-link {
+    color: inherit;
+    text-decoration: none;
+}
+.brand-name-link:hover {
+    color: #F3B451;
 }
 .brand-lockup span {
     display: flex;
