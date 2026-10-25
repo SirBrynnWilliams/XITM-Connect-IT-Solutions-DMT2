@@ -16,7 +16,7 @@ The root URL opens the institute website. The companion mobile app is also avail
 
 Create a second Netlify site from the same repository. Set its build command to `npm run build:mobile` and its publish directory to `dist/mobile`. Suggested site name: `lumko-mobile`. These names are suggestions; Netlify requires each name to be available. The resulting addresses will be `https://<site-name>.netlify.app`.
 
-Netlify's Git integration builds committed files from GitHub, not uncommitted workspace changes. Push the desired project changes to the repository before connecting either site, or deploy the built output folders manually.
+Netlify's Git integration builds committed files from GitHub, not uncommitted workspace changes. Push the desired project changes to the repository before connecting either site, or deploy the built output folders manually. The website output includes a `_redirects` file so the site root opens the institute homepage.
 
 The standalone mobile site and website site have different origins. Browser-local data is separate for each site, so specimen records will not sync between them. The app's LIMS records are stored only in the browser and are not sent to a server.
 

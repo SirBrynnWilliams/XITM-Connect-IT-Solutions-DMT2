@@ -1,4 +1,4 @@
-import { cp, mkdir, rm } from "node:fs/promises";
+import { cp, mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -37,6 +37,10 @@ if (buildTarget === "combined") {
     const websiteOutput = path.join(outputDirectory, "website");
     await copyDirectory(websiteDirectory, path.join(websiteOutput, websiteDirectory));
     await copyMobileApp(path.join(websiteOutput, mobileDirectory));
+    await writeFile(
+        path.join(websiteOutput, "_redirects"),
+        "/ /Connect%20IT%20Solutions%20Task%203%20Website/index.html 200\n"
+    );
     console.log("Built the website and companion app into dist/website/.");
 } else if (buildTarget === "mobile") {
     await copyMobileApp(path.join(outputDirectory, "mobile"));
