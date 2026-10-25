@@ -4,8 +4,3 @@ publish = "dist/website"
 
 [build.environment]
 NODE_VERSION = "20"
-
-[[redirects]]
-from = "/"
-to = "/Connect%20IT%20Solutions%20Task%203%20Website/index.html"
-status = 200

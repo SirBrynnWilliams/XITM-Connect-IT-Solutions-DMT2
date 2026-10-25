@@ -10,13 +10,13 @@ Create a Netlify site from this repository with the settings in `netlify.toml`:
 - Publish directory: `dist/website`
 - Suggested site name: `lumko-medical-research-facility-website`
 
-The root URL opens the institute website. The companion mobile app is also available on this site at `/Connect%20IT%20Solutions%20application%20APK%20V1/index.html`.
+The root URL opens the institute website. Its LIMS links open the separately deployed mobile site at `https://lumko-mobile.netlify.app/`.
 
 ## Mobile app site
 
 Create a second Netlify site from the same repository. Set its build command to `npm run build:mobile` and its publish directory to `dist/mobile`. Suggested site name: `lumko-mobile`. These names are suggestions; Netlify requires each name to be available. The resulting addresses will be `https://<site-name>.netlify.app`.
 
-Netlify's Git integration builds committed files from GitHub, not uncommitted workspace changes. Push the desired project changes to the repository before connecting either site, or deploy the built output folders manually. The website output includes a `_redirects` file so the site root opens the institute homepage.
+Netlify's Git integration builds committed files from GitHub, not uncommitted workspace changes. Push the desired project changes to the repository before connecting either site, or deploy the built output folders manually.
 
 The standalone mobile site and website site have different origins. Browser-local data is separate for each site, so specimen records will not sync between them. The app's LIMS records are stored only in the browser and are not sent to a server.
 
