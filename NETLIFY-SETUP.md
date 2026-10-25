@@ -10,7 +10,7 @@ Create a Netlify site from this repository with the settings in `netlify.toml`:
 - Publish directory: `dist/website`
 - Suggested site name: `lumko-medical-research-facility-website`
 
-The companion mobile app is also available on this site at `/Connect%20IT%20Solutions%20application%20APK%20V1/index.html`.
+The root URL opens the institute website. The companion mobile app is also available on this site at `/Connect%20IT%20Solutions%20application%20APK%20V1/index.html`.
 
 ## Mobile app site
 

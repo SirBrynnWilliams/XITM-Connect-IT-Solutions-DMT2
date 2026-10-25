@@ -35,7 +35,7 @@ if (buildTarget === "combined") {
     console.log("Built the combined website and mobile app into dist/.");
 } else if (buildTarget === "website") {
     const websiteOutput = path.join(outputDirectory, "website");
-    await copyDirectory(websiteDirectory, websiteOutput);
+    await copyDirectory(websiteDirectory, path.join(websiteOutput, websiteDirectory));
     await copyMobileApp(path.join(websiteOutput, mobileDirectory));
     console.log("Built the website and companion app into dist/website/.");
 } else if (buildTarget === "mobile") {
